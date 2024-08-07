@@ -26,7 +26,7 @@ namespace Inventario.Controllers
                    ( from d in db.producto
                      join p in db.proveedor on d.proveedor_id equals p.id into proveedores
                      from proveedor in proveedores.DefaultIfEmpty() // Para manejar casos donde no hay proveedor
-                     select new ListProductoViewModel
+                    select new ListProductoViewModel
                     {
                         Id = d.id,
                         Cantidad = d.cantidad,
@@ -40,7 +40,7 @@ namespace Inventario.Controllers
                         Costo = d.costo,
                         Proveedor_id = d.proveedor_id,
                          ProveedorNombre = proveedor != null ? proveedor.nombre : "No disponible"
-                     }).ToList();
+                    }).ToList();
 
             }
             return View(lst);
