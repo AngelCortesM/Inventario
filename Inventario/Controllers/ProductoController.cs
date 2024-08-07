@@ -97,5 +97,95 @@ namespace Inventario.Controllers
                 return Content(ex.Message);
             }
         }
+        //editar
+        public ActionResult Edit(int Id)
+        {
+            ProductoViewModel model = new ProductoViewModel();
+            using (CrudMVCRazorEntities db = new CrudMVCRazorEntities())
+            {
+                var oProducto = db.producto.Find(Id);
+                if (oProducto != null)
+                {
+                    model.Cantidad = oProducto.cantidad;
+                    model.Proveedor_id = oProducto.proveedor_id;
+                    model.Valor = oProducto.valor;
+                    model.Descripcion = oProducto.descripcion;
+                    model.Estado = oProducto.estado;
+                    model.Fecha = oProducto.fecha;
+                    model.Nombre = oProducto.nombre;
+                    model.Barras = oProducto.barras;
+                    model.Categoria = oProducto.categoria;
+                    model.Costo = oProducto.costo;
+                    model.Id = oProducto.id;
+                }
+
+
+            }
+            return View(model);
+        }
+
+
+        [HttpPost]
+        public ActionResult Update(ProductoViewModel model)
+        {
+            try
+            {
+                using (CrudMVCRazorEntities db = new CrudMVCRazorEntities())
+                {
+                    // Encuentra el producto por su Id
+                    var oProducto = db.producto.Find(model.Id);
+
+                    // Verifica si el producto fue encontrado
+                    if (oProducto != null)
+                    {
+                        // Asignación de propiedades del modelo al objeto producto
+                        oProducto.cantidad = model.Cantidad;
+                        oProducto.proveedor_id = model.Proveedor_id;
+                        oProducto.valor = model.Valor;
+                        oProducto.descripcion = model.Descripcion;
+                        oProducto.estado = model.Estado;
+                        oProducto.fecha = model.Fecha;
+                        oProducto.nombre = model.Nombre;
+                        oProducto.barras = model.Barras;
+                        oProducto.categoria = model.Categoria;
+                        oProducto.costo = model.Costo;
+
+                        // Marca el objeto producto como modificado
+                        db.Entry(oProducto).State = System.Data.Entity.EntityState.Modified;
+
+                        // Guarda los cambios en la base de datos
+                        db.SaveChanges();
+                    }
+                }
+                    return Content("1");
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.Message);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int Id)
+        {
+            try
+            {
+                using (CrudMVCRazorEntities db = new CrudMVCRazorEntities())
+                {
+                    var oProducto = db.producto.Find(Id);
+                    // Asignación de propiedades del modelo al objeto proveedor
+
+
+                    db.producto.Remove(oProducto);
+                    db.SaveChanges();
+                }
+
+                return Content("1");
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.Message);
+            }
+        }
     }
 }

@@ -1,4 +1,55 @@
-﻿/* Contenedor de la tabla */
+﻿/* Configura el cuerpo y html para usar el 100% de la altura de la ventana */
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+/* Establece el cuerpo para usar flexbox y alinear elementos en columna */
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Configura el navbar para que esté fijo en la parte superior */
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    
+   
+}
+
+/* Configura el footer para que esté fijo en la parte inferior */
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    height: 25px; /* Ajusta según el tamaño de tu footer */
+}
+
+/* Contenedor de contenido principal que se ajusta entre navbar y footer */
+.body-content {
+    flex: 1;
+    overflow-y: auto;
+   
+   
+    margin-bottom: 25px; /* Igual a la altura del footer */
+    /* Oculta la barra de desplazamiento en la mayoría de los navegadores */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer, Edge */
+}
+
+    /* Oculta la barra de desplazamiento en WebKit (Chrome, Safari) */
+    .body-content::-webkit-scrollbar {
+        display: none;
+    }
+
+
+/* Contenedor de la tabla */
 .table-container {
     background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco con 80% opacidad */
     border-radius: 8px; /* Bordes redondeados */
@@ -10,6 +61,8 @@
 
 /* Estilos generales de la tabla */
 .table {
+    flex: 1;
+    overflow-y: auto;
     border-collapse: separate; /* Necesario para aplicar border-radius */
     border-spacing: 0; /* Elimina el espacio entre celdas */
     width: 100%; /* Asegura que la tabla use todo el ancho disponible */

@@ -118,6 +118,9 @@
          })
          .then(data => {
              document.getElementById("divEdit").innerHTML = data;
+
+             // Ejecuta el script para cargar los proveedores después de cargar el contenido
+             loadProveedores();
          })
          .catch(error => {
              console.error('There has been a problem with your fetch operation:', error);
@@ -239,7 +242,7 @@
 
     /**
      * Función para ordenar las columnas de la tabla.
-   
+
      */
     function sortTable(columnIndex, isNumeric = false) {
         const table = document.querySelector('#divLista .table');
@@ -278,7 +281,7 @@
 
     /**
      * Función para filtrar filas por columna específica.
-   
+
      */
     function filterColumn(columnIndex) {
         const filterValue = document.querySelectorAll('.column-filter')[columnIndex].value.toLowerCase();
@@ -443,9 +446,122 @@
     }
 
 
+     /**
+  * Función para editar un producto existente.
+  */
+ // URL para actualizar un producto
+var urlUpdate = "@Url.Content("~/Producto/Update")";
+
+ function jsEdit() {
+     fetch(urlUpdate, {
+         method: "POST",
+         body: JSON.stringify({
+             Cantidad: document.getElementById("Cantidad").value,
+             Proveedor_id: document.getElementById("Proveedor_id").value,
+             Valor: document.getElementById("Valor").value,
+             Descripcion: document.getElementById("Descripcion").value,
+             Estado: document.getElementById("Estado").value,
+             Fecha: document.getElementById("Fecha").value,
+             Nombre: document.getElementById("Nombre").value,
+             Barras: document.getElementById("Barras").value,
+             Categoria: document.getElementById("Categoria").value,
+             Costo: document.getElementById("Costo").value,
+             Id: document.getElementById("Id").value
+         }),
+
+         headers: {
+             'Accept': "application/json",
+             "Content-Type": "application/json"
+         }
+     }).then(function (response) {
+         if (response.ok) {
+             return response.text();
+         } else {
+             throw new Error("Error al ejecutar: " + response.statusText);
+         }
+     }).then(function (data) {
+         if (data != "1") {
+             alert(data);
+         } else {
+             document.location.href = "@Url.Content("~/Producto/")";
+         }
+     }).catch(function (error) {
+         console.error('Error:', error);
+         alert("Se produjo un error: " + error.message);
+     });
+    }
+
+    /**
+ * Función para eliminar un proveedor.
+ * Muestra una confirmación antes de proceder con la eliminación.
+
+ */
+function jsDelete(Id) {
+    // Mostrar un mensaje de confirmación
+    Swal.fire({
+        title: '¿Estás seguro?',
+        text: "No podrás revertir esto",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#FF6F61',
+        cancelButtonColor: '#00B0FF',
+        confirmButtonText: 'Sí, eliminarlo',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Solo proceder si el usuario confirma la eliminación
+            fetch("@Url.Content("~/Producto/Delete")", {
+                method: "POST",
+                body: JSON.stringify({ Id: Id }),
+                headers: {
+                    'Accept': "application/json",
+                    "Content-Type": "application/json"
+                }
+            }).then(function (response) {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    throw new Error("Error al ejecutar: " + response.statusText);
+                }
+            }).then(function (data) {
+                if (data != "1") {
+                    Swal.fire({
+                        title: 'Error',
+                        text: data,
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'Eliminado',
+                        text: 'El registro ha sido eliminado.',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    });
+                    Get(); // Actualiza la lista de proveedores
+                }
+            }).catch(function (error) {
+                console.error('Error:', error);
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Se produjo un error: ' + error.message,
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            });
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+            // Opcional: Mostrar un mensaje de cancelación
+            Swal.fire(
+                'Cancelado',
+                'El registro no fue eliminado',
+                'info'
+            );
+        }
+    });
+}
 
 
-    //funcion apra exportar a excel 
+    //funcion apra exportar a excel
     document.getElementById('exportToExcel').addEventListener('click', function () {
         const table = document.querySelector('#divLista .table');
         const wb = XLSX.utils.book_new();
