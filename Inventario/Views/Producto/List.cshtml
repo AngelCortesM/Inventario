@@ -1,0 +1,132 @@
+﻿
+
+
+
+@using Inventario.Models.ViewModel
+@model List<ListProductoViewModel>
+@{
+    Layout = null;
+}
+
+<link rel="stylesheet" type="text/css" href="~/Content/css/List.css">
+
+<div id="divLista" class="table-container">
+    <table class="table table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>
+                    <div class="header-input-container">
+                        <i class="bi bi-record-circle-fill icon-button"></i>
+                        <input type="text" class="column-filter column-id" placeholder="Id">
+                    </div>
+                </th>
+                <th>
+                    <div class="header-input-container">
+                        <i class="bi bi-box-seam-fill icon-button"></i>
+                        <input type="text" class="column-filter" placeholder="Nombre">
+                    </div>
+                </th>
+                <th>
+                    <div class="header-input-container">
+                        <i class="bi bi-pencil-fill icon-button"></i>
+                        <input type="text" class="column-filter" placeholder="Descripción">
+                    </div>
+                </th>
+                <th>
+                    <div class="header-input-container">
+                        <i class="bi bi-tag-fill icon-button"></i>
+                        <input type="text" class="column-filter" placeholder="Categoría">
+                    </div>
+                </th>
+                <th>
+                    <div class="header-input-container">
+                        <i class="bi bi-cash icon-button"></i>
+                        <input type="text" class="column-filter" placeholder="Costo">
+                    </div>
+                </th>
+                <th>
+                    <div class="header-input-container">
+                        <i class="bi bi-currency-dollar icon-button"></i>
+                        <input type="text" class="column-filter" placeholder="Valor">
+                    </div>
+                </th>
+                <th>
+                    <div class="header-input-container">
+                        <i class="bi bi-bar-chart-fill icon-button"></i>
+                        <input type="text" class="column-filter" placeholder="Cantidad">
+                    </div>
+                </th>
+                <th>
+                    <div class="header-input-container">
+                        <i class="bi bi-calendar-fill icon-button"></i>
+                        <input type="text" class="column-filter" placeholder="Fecha">
+                    </div>
+                </th>
+                <th>
+                    <div class="header-input-container">
+                        <i class="bi bi-gear-fill icon-button"></i>
+                        <input type="text" class="column-filter" placeholder="Estado">
+                    </div>
+                </th>
+                <th>
+                    <div class="header-input-container">
+                        <i class="bi bi bi-upc-scan icon-button"></i>
+                        <input type="text" class="column-filter" placeholder="Barras">
+                    </div>
+                </th>
+                <th>
+                    <div class="header-input-container">
+                        <i class="bi bi-person-fill icon-button"></i>
+                        <input type="text" class="column-filter" placeholder="Proveedor ID">
+                    </div>
+                </th>
+                <th>
+                    <div class="header-input-container">
+                        <i class="bi bi-person-fill icon-button"></i>
+                        <input type="text" class="column-filter" placeholder="Proveedor">
+                    </div>
+                </th>
+                <th>
+                    <div class="header-input-container">
+                        <span>Acciones</span>
+                    </div>
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var oProducto in Model)
+            {
+                <tr>
+                    <td>@oProducto.Id</td>
+                    <td>@oProducto.Nombre</td>
+                    <td>@oProducto.Descripcion</td>
+                    <td>@oProducto.Categoria</td>
+                    <td>@oProducto.Costo</td>
+                    <td>@oProducto.Valor</td>
+                    <td>@oProducto.Cantidad</td>
+                    <td>@(oProducto.Fecha.HasValue ? oProducto.Fecha.Value.ToString("d") : "N/A")</td>
+                    <td>@oProducto.Estado</td>
+                    <td>@oProducto.Barras</td>
+                    <td>@oProducto.Proveedor_id</td>
+                    <td>@oProducto.ProveedorNombre</td>
+
+                    <td>
+                        <div class="d-flex">
+                            <a onclick="Edit(@oProducto.Id)">
+                                <div class="btn2">
+                                    <i class="text-dark bi bi-gear-wide-connected"></i>
+                                </div>
+                            </a>
+                            <a onclick="jsDelete(@oProducto.Id)">
+                                <div class="btn1">
+                                    <i class="text-dark bi bi-backspace-fill"></i>
+                                </div>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

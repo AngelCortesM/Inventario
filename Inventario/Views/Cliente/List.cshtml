@@ -1,0 +1,109 @@
+﻿@using Inventario.Models.ViewModel
+@model List<ListClienteViewModel>
+@{
+    Layout = null;
+}
+
+
+<link rel="stylesheet" type="text/css" href="~/Content/css/List.css">
+
+<div id="divLista" class="table-container">
+    <table class="table table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>
+                    <div class=" header-input-container ">
+                        <i class="bi bi-record-circle-fill icon-button"></i>
+                        <input type="text" class="column-filter column-id" placeholder="Id">
+                    </div>
+                </th>
+                <th>
+                    <div class="header-input-container">
+                        <i class="bi bi-person-vcard-fill icon-button"></i>
+                        <input type="text" class="column-filter" placeholder="Cédula">
+                    </div>
+                </th>
+                <th>
+                    <div class="header-input-container">
+                        <i class="bi bi-house-fill icon-button"></i>
+                        <input type="text" class="column-filter" placeholder="Dirección">
+                    </div>
+                </th>
+                <th>
+                    <div class="header-input-container">
+                        <i class="bi bi-person-lines-fill icon-button"></i>
+                        <input type="text" class="column-filter" placeholder="Nombre">
+                    </div>
+                </th>
+                <th>
+                    <div class="header-input-container">
+                        <i class="bi bi-person-lines-fill icon-button"></i>
+                        <input type="text" class="column-filter" placeholder="Apellido">
+                    </div>
+                </th>
+                <th>
+                    <div class="header-input-container">
+                        <i class="bi bi-telephone-fill icon-button"></i>
+                        <input type="text" class="column-filter" placeholder="Teléfono">
+                    </div>
+                </th>
+                <th>
+                    <div class="header-input-container">
+                        <i class="bi bi-envelope-fill icon-button"></i>
+                        <input type="text" class="column-filter" placeholder="Email">
+                    </div>
+                </th>
+                <th>
+                    <div class="header-input-container">
+                        <i class="bi bi-calendar-check-fill icon-button"></i>
+                        <input type="text" class="column-filter" placeholder="Fecha Creación">
+                    </div>
+                </th>
+                <th>
+                    <div class="header-input-container">
+                        <i class="bi bi-calendar-check-fill icon-button"></i>
+                        <input type="text" class="column-filter" placeholder="Fecha Act">
+                    </div>
+                </th>
+                <th>
+                    <div class="header-input-container">
+                     <span>Acciones</span>
+                    </div>
+                </th> <!-- Columna para las acciones, puede estar vacía -->
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var oCliente in Model)
+            {
+                <tr>
+                    <td>@oCliente.Id</td>
+                    <td>@oCliente.Cedula</td>
+                    <td>@oCliente.Direccion</td>
+                    <td>@oCliente.Nombre</td>
+                    <td>@oCliente.Apellido</td>
+                    <td>@oCliente.Telefono</td>
+                    <td>@oCliente.Email</td>
+                    <td>@(oCliente.Fecha.HasValue ? oCliente.Fecha.Value.ToString("d") : "N/A")</td>
+                    <td>@(oCliente.FechaUp.HasValue ? oCliente.FechaUp.Value.ToString("d") : "N/A")</td>
+                    <td>
+                        <div class="d-flex">
+
+                            <a onclick="Edit(@oCliente.Id)">
+                                <div class="btn2" >
+
+                                    <i class="text-dark bi bi-gear-wide-connected"></i>
+                                </div>
+                            </a>
+                            <a onclick="jsDelete(@oCliente.Id)">
+                                <div class="btn1">
+
+                                    <i class="text-dark bi bi-backspace-fill"></i>
+                                </div>
+                                </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
