@@ -1,0 +1,205 @@
+﻿/* Contenedor de la tabla */
+.table-container {
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco con 80% opacidad */
+    border-radius: 8px; /* Bordes redondeados */
+    overflow: hidden; /* Asegura que los bordes redondeados se apliquen correctamente */
+    padding: 1rem; /* Espaciado interior */
+    width: 100%; /* Usa todo el ancho disponible */
+    overflow-x: auto; /* Desplazamiento horizontal para contenido desbordante */
+}
+
+/* Estilos generales de la tabla */
+.table {
+    border-collapse: separate; /* Necesario para aplicar border-radius */
+    border-spacing: 0; /* Elimina el espacio entre celdas */
+    width: 100%; /* Asegura que la tabla use todo el ancho disponible */
+    max-width: 100%; /* Asegura que la tabla no se desborde del contenedor */
+    table-layout: auto; /* Permite a las celdas ajustarse al contenido */
+}
+
+    /* Estilos del encabezado de la tabla */
+    .table thead th {
+        background-color: rgba(0, 0, 0, 0.8); /* Fondo oscuro con algo de transparencia */
+        padding: 0.2rem; /* Espaciado interno */
+        text-align: left; /* Alinea el texto a la izquierda */
+        white-space: nowrap; /* Evita que el texto se rompa */
+    }
+
+    /* Estilos para las celdas de la tabla */
+    .table td, .table th {
+        border: none; /* Elimina los bordes de las celdas */
+        font-size: 0.9rem; /* Tamaño de fuente */
+        padding: 0.2rem; /* Espaciado interno */
+        word-wrap: break-word; /* Permite que el contenido se ajuste en la celda */
+        white-space: nowrap; /* Evita que el texto se rompa */
+    }
+
+/* Asegurar que las celdas no se desborden */
+.table-container table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+    .table-container table th, .table-container table td {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+
+/* Estilos para las celdas de la tabla */
+.table td, .table th {
+    border: none; /* Elimina los bordes de las celdas */
+    font-size: 0.9rem; /* Tamaño de fuente */
+    padding: 0.2rem; /* Espaciado interno */
+    word-wrap: break-word; /* Permite que el contenido se ajuste en la celda */
+}
+
+/* Bordes redondeados en las celdas */
+.table thead th:first-child {
+    border-top-left-radius: 8px; /* Borde redondeado superior izquierdo */
+}
+
+.table thead th:last-child {
+    border-top-right-radius: 8px; /* Borde redondeado superior derecho */
+}
+
+.table tbody tr:last-child td:first-child {
+    border-bottom-left-radius: 8px; /* Borde redondeado inferior izquierdo */
+}
+
+.table tbody tr:last-child td:last-child {
+    border-bottom-right-radius: 8px; /* Borde redondeado inferior derecho */
+}
+
+/* Estilo para los íconos dentro de las celdas */
+.icon-button {
+    margin-right: 0.3rem; /* Espacio entre el ícono y el campo de entrada */
+    font-size: 0.9rem; /* Tamaño del ícono */
+    padding: 5px; /* Espacio interior del botón */
+    display: flex; /* Alinea el ícono dentro del botón */
+    align-items: center; /* Centra el ícono verticalmente */
+    justify-content: center; /* Centra el ícono horizontalmente */
+}
+
+/* Botones de acción */
+.btn1, .btn2 {
+    font-size: 1rem; /* Tamaño del ícono */
+    padding: 5px; /* Espacio interior del botón */
+    display: flex; /* Alinea el ícono dentro del botón */
+    align-items: center; /* Centra el ícono verticalmente */
+    justify-content: center; /* Centra el ícono horizontalmente */
+    border-radius: 8px; /* Bordes redondeados */
+    margin-right: 0.1rem; /* Espacio exterior a la derecha del botón */
+    width: 2rem; /* Ancho del botón */
+    height: 1.5rem; /* Altura del botón */
+}
+
+/* Estilo para el botón de eliminar */
+.btn1 {
+    background: #FF6F61; /* Coral suave para eliminar */
+    color: white; /* Color del texto */
+    border: none; /* Sin borde */
+    transition: background 0.3s; /* Transición suave del fondo */
+}
+
+    .btn1:hover {
+        background: #FF3D32; /* Coral más intenso al pasar el cursor */
+    }
+
+/* Estilo para el botón de editar */
+.btn2 {
+    background: #00B0FF; /* Azul claro para editar */
+    color: white; /* Color del texto */
+    border: none; /* Sin borde */
+    transition: background 0.3s; /* Transición suave del fondo */
+}
+
+    .btn2:hover {
+        background: #0081CB; /* Azul más oscuro al pasar el cursor */
+    }
+
+/* Contenedor del campo de entrada */
+.header-input-container {
+    display: flex;
+    align-items: center; /* Alinea verticalmente el ícono y el campo de entrada */
+    padding: 0; /* Elimina el padding */
+    width: fit-content; /* Ajusta el ancho del contenedor al contenido */
+    box-sizing: border-box; /* Incluye padding y borde en el ancho total */
+    word-wrap: break-word;
+}
+
+/* Campo de entrada */
+.column-filter {
+    background: transparent; /* Fondo transparente */
+    color: lightcoral; /* Color del texto */
+    padding: 0.1rem; /* Espaciado interno */
+    border: 1px solid #ccc1; /* Borde del campo de entrada */
+    border-radius: 6px; /* Bordes redondeados */
+    box-sizing: border-box; /* Incluye padding y borde en el ancho total */
+    font-size: 0.875rem; /* Tamaño de fuente ajustado */
+    flex: 1; /* Ocupa todo el espacio disponible */
+    min-width: 100px; /* Establece un ancho mínimo para la responsividad */
+    width: 100%; /* Ancho automático para ajustarse al contenido */
+    word-wrap: break-word;
+}
+
+    /* Placeholder del campo de entrada */
+    .column-filter::placeholder {
+        color: lightcoral; /* Color del texto del placeholder */
+        font-weight: 500; /* Peso de la fuente */
+        font-size: 0.875rem; /* Tamaño de fuente del placeholder */
+        word-wrap: break-word;
+    }
+
+.column-id {
+    word-wrap: break-word;
+}
+
+
+@media screen and (max-width: 768px) {
+    .table-container {
+        overflow-x: auto; /* Desplazamiento horizontal para pantallas pequeñas */
+    }
+
+    .table {
+        display: block; /* Permite el desplazamiento horizontal */
+        width: 100%;
+    }
+
+        .table thead, .table tbody, .table th, .table td, .table tr {
+            display: block; /* Permite el desplazamiento horizontal */
+        }
+
+            .table thead tr {
+                position: absolute; /* Encabezado fijo en la parte superior */
+                top: -9999px; /* Oculta el encabezado */
+                left: -9999px;
+            }
+
+        .table tr {
+            border: 1px solid #ccc; /* Añade bordes para separar filas */
+            margin-bottom: 1rem; /* Espacio entre filas para mejorar la legibilidad */
+            position: relative;
+            padding-left: 50%; /* Espacio para el contenido */
+            padding-right: 1rem; /* Espacio adicional a la derecha */
+        }
+
+        .table td {
+            border: none; /* Elimina bordes */
+            position: relative; /* Necesario para los pseudo-elementos */
+            padding-left: 50%; /* Espacio para el contenido */
+            white-space: pre-wrap; /* Permite el ajuste del texto */
+        }
+
+            .table td:before {
+                content: attr(data-label); /* Añade el contenido del encabezado */
+                position: absolute; /* Posiciona el contenido */
+                left: 0; /* Alinea a la izquierda */
+                width: 50%; /* Ancho del contenido */
+                padding-left: 0.5rem; /* Añade padding a la izquierda */
+                font-weight: bold; /* Negrita para diferenciar encabezados */
+                color: #000; /* Color del texto de los encabezados */
+                white-space: nowrap; /* Evita el ajuste del texto */
+            }
+}

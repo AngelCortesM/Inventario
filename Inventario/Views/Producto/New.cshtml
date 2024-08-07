@@ -1,0 +1,110 @@
+﻿@model Inventario.Models.ViewModel.ProductoViewModel
+@{
+    ViewBag.Title = "New";
+    Layout = null;
+}
+
+<style>
+    .form-control {
+        font-size: 0.879rem;
+    }
+
+    .position-relative {
+        position: relative;
+        width: 100%;
+    }
+
+    #Proveedor_list {
+        display: none;
+        font-size: 0.879rem;
+        width: 90%;
+        border-radius: 8px;
+        padding: 0;
+        margin: 0;
+    }
+
+        #Proveedor_list li {
+            cursor: pointer;
+        }
+
+            #Proveedor_list li:hover {
+                background-color: lightcoral;
+            }
+</style>
+
+
+<h2>New Product</h2>
+
+<form class="form-control">
+    <div class="row">
+        <!-- Campos del formulario -->
+
+        <div class="form-group col-md-6 col-lg-3">
+            @Html.LabelFor(p => p.Cantidad)
+            @Html.TextBoxFor(p => p.Cantidad, new { @class = "form-control", type = "number", step = "any", id = "Cantidad" })
+        </div>
+        <div class="form-group col-md-6 col-lg-3">
+            <label for="Proveedor_id">Proveedor:</label>
+            <div class="position-relative">
+                <input type="text"
+                       id="Proveedor_search"
+                       class="form-control"
+                       placeholder="Buscar proveedor"
+                       oninput="filterProveedores()"
+                       autocomplete="off" />
+                <ul id="Proveedor_list" class="dropdown-menu" style="position: absolute; width: 100%; max-height: 200px; overflow-y: auto; z-index: 10;">
+                    <!-- Las opciones filtradas se agregarán aquí -->
+                </ul>
+                <!-- Campo oculto para almacenar el ID del proveedor seleccionado -->
+                <input type="hidden" id="Proveedor_id" name="Proveedor_id" />
+            </div>
+        </div>
+
+
+        <div class="form-group col-md-6 col-lg-3">
+            @Html.LabelFor(p => p.Valor)
+            @Html.TextBoxFor(p => p.Valor, new { @class = "form-control", type = "number", step = "any", id = "Valor" })
+        </div>
+        <div class="form-group col-md-6 col-lg-3">
+            @Html.LabelFor(p => p.Descripcion)
+            @Html.TextBoxFor(p => p.Descripcion, new { @class = "form-control", id = "Descripcion" })
+        </div>
+        <div class="form-group col-md-6 col-lg-3">
+            @Html.LabelFor(p => p.Estado)
+            @Html.TextBoxFor(p => p.Estado, new { @class = "form-control", id = "Estado" })
+        </div>
+        <div class="form-group col-md-6 col-lg-3">
+            @Html.LabelFor(p => p.Fecha)
+            @Html.TextBoxFor(p => p.Fecha, new { @class = "form-control", type = "date", id = "Fecha" })
+        </div>
+        <div class="form-group col-md-6 col-lg-3">
+            @Html.LabelFor(p => p.Nombre)
+            @Html.TextBoxFor(p => p.Nombre, new { @class = "form-control", id = "Nombre" })
+        </div>
+        <div class="form-group col-md-6 col-lg-3">
+            @Html.LabelFor(p => p.Barras)
+            @Html.TextBoxFor(p => p.Barras, new { @class = "form-control", id = "Barras" })
+        </div>
+        <div class="form-group col-md-6 col-lg-3">
+            @Html.LabelFor(p => p.Categoria)
+            @Html.TextBoxFor(p => p.Categoria, new { @class = "form-control", id = "Categoria" })
+        </div>
+        <div class="form-group col-md-6 col-lg-3">
+            @Html.LabelFor(p => p.Costo)
+            @Html.TextBoxFor(p => p.Costo, new { @class = "form-control", type = "number", step = "any", id = "Costo" })
+        </div>
+
+        <!-- Botón de agregar -->
+        <div class="form-group col-md-6 col-lg-1">
+            <label></label>
+            <button type="button" class="btn btn-primary form-control" onclick="jsAdd()">Agregar</button>
+        </div>
+        <div class="form-group col-md-6 col-lg-1">
+            <label></label>
+            <button type="button" class="btn text-bg-danger form-control" onclick="NewC()">Cancelar</button>
+        </div>
+    </div>
+</form>
+
+
+

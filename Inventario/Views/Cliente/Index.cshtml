@@ -1,0 +1,494 @@
+﻿@{
+    ViewBag.Title = "Lista de Clientes"; // Define el título de la vista
+}
+
+<h4 class="text-center fw-bold mb-4" style="color:#343340;">@ViewBag.Title</h4> <!-- Muestra el título en el encabezado de la página -->
+<!-- Campo de búsqueda -->
+<div class="container mt-4">
+    <div class="mb-3">
+
+        <!-- Grupo de entrada con botones y campo de búsqueda -->
+        <div class="input-group" style="overflow-y: auto; /* Desplazamiento horizontal para contenido desbordante */">
+            <!-- Botón para crear un nuevo cliente -->
+            <button class="btn btn-success" onclick="New()">
+                <i class="bi-plus-circle"> Crear </i>
+            </button>
+            <!-- Botón para recargar la lista de clientes -->
+            <button class="btn btn-primary" onclick="Get()">
+                <i class="bi bi-arrow-clockwise"></i>
+            </button>
+            <!-- Campo de búsqueda con evento para filtrar resultados -->
+            <input type="text" id="searchInput" class="form-control" placeholder="Buscar por nombre, cédula, etc." onkeyup="search()" />
+            <button id="exportToExcel" class="btn btn-success">
+                <i class="bi bi-file-excel"></i> Exportar todo a Excel
+            </button>
+            <button id="exportButton" class="btn btn-danger">
+                <i class="bi bi-file-pdf"></i> Exportar a PDF
+            </button>
+
+        </div>
+    </div>
+</div>
+
+<!-- Contenedor para el contenido del formulario 'Nuevo' -->
+<div id="divNew" class="container">
+    <!-- El contenido del formulario 'Nuevo' se cargará aquí -->
+</div>
+
+<!-- Contenedor para el contenido del formulario 'Editar' -->
+<div id="divEdit" class="container">
+    <!-- El contenido del formulario 'Editar' se cargará aquí -->
+</div>
+
+<!-- Contenedor para la lista de clientes -->
+<div id="divLista" class="container-fluid">
+    <!-- El contenido de la lista de clientes se cargará aquí -->
+</div>
+
+
+<script>
+    // Define URLs para operaciones relacionadas con clientes
+    const urlNew = "@Url.Content("~/Cliente/New")"; // URL para el formulario de nuevo cliente
+    const urlGet = "@Url.Content("~/Cliente/List")"; // URL para obtener la lista de clientes
+    const urlEdit = "@Url.Content("~/Cliente/Edit")"; // URL para el formulario de edición
+
+    // Variable para rastrear la visibilidad del formulario 'Nuevo'
+    let isNewContentVisible = false;
+
+    /**
+     * Función para manejar la visualización del formulario 'Nuevo'.
+     */
+    function New() {
+        const divNew = document.getElementById("divNew");
+
+        if (isNewContentVisible) {
+            // Verificar si hay texto en los campos de entrada
+            const inputs = divNew.querySelectorAll('input');
+            let hasText = false;
+            inputs.forEach(input => {
+                if (input.value.trim() !== "") {
+                    hasText = true;
+                }
+            });
+
+            if (hasText) {
+                // Si hay texto, muestra una alerta y no oculta el formulario
+                alert("No puedes cerrar el formulario mientras haya texto en los campos.");
+            } else {
+                // Si no hay texto, oculta el formulario
+                divNew.innerHTML = "";
+                isNewContentVisible = false;
+            }
+        } else {
+            // Si el contenido no está visible, lo carga y muestra
+            fetch(urlNew)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok.');
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    divNew.innerHTML = data;
+                    isNewContentVisible = true;
+                })
+                .catch(error => {
+                    console.error('There has been a problem with your fetch operation:', error);
+                });
+        }
+    }
+
+    /**
+     * Función para manejar la visualización del formulario de edición.
+
+     */
+    function Edit(id) {
+        const urlEdit = `@Url.Content("~/Cliente/Edit/")${id}`;
+        fetch(urlEdit)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok.');
+                }
+                return response.text();
+            })
+            .then(data => {
+                document.getElementById("divEdit").innerHTML = data;
+            })
+            .catch(error => {
+                console.error('There has been a problem with your fetch operation:', error);
+            });
+    }
+
+    /**
+     * Función para cerrar el formulario de edición.
+     */
+    function EditC() {
+        if (isNewContentVisible) {
+            // Verificar si hay texto en los campos de entrada
+            const inputs = divNew.querySelectorAll('input');
+            let hasText = false;
+            inputs.forEach(input => {
+                if (input.value.trim() !== "") {
+                    hasText = true;
+                }
+            });
+
+            if (hasText) {
+                // Si hay texto, muestra una alerta y no oculta el formulario
+                alert("No puedes cerrar el formulario mientras haya texto en los campos.");
+            } else {
+                // Si no hay texto, oculta el formulario
+                divNew.innerHTML = "";
+                isNewContentVisible = false;
+            }
+        } else {
+            // Limpiar el contenido del divEdit para cerrar el formulario de edición
+            document.getElementById("divEdit").innerHTML = "";
+        }
+    }
+
+    /**
+     * Función para cerrar el formulario de nuevo cliente.
+     */
+    function NewC() {
+        const divNew = document.getElementById("divNew");
+
+        // Verificar si hay texto en los campos de entrada dentro de divNew
+        const inputs = divNew.querySelectorAll('input');
+        let hasText = false;
+        inputs.forEach(input => {
+            if (input.value.trim() !== "") {
+                hasText = true;
+            }
+        });
+
+        if (hasText) {
+            // Si hay texto, muestra una alerta y no oculta el formulario
+            alert("No puedes cerrar el formulario mientras haya texto en los campos.");
+        } else {
+            // Si no hay texto, oculta el formulario
+            divNew.innerHTML = "";
+        }
+    }
+
+    /**
+     * Función para cargar la lista de clientes.
+     */
+    function Get() {
+        fetch(urlGet)
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("divLista").innerHTML = data;
+                attachSortEvents(); // Añade eventos de clic a los encabezados después de cargar los datos
+                attachFilterEvents(); // Añade eventos de filtro después de cargar los datos
+            });
+    }
+
+    /**
+     * Función para realizar una búsqueda en toda la tabla.
+     */
+    function search() {
+        const query = document.getElementById('searchInput').value.toLowerCase();
+        const rows = document.querySelectorAll('#divLista .table tbody tr');
+
+        rows.forEach(row => {
+            const cells = row.querySelectorAll('td');
+            let match = false;
+            cells.forEach(cell => {
+                if (cell.textContent.toLowerCase().includes(query)) {
+                    match = true;
+                }
+            });
+            row.style.display = match ? '' : 'none';
+        });
+    }
+
+    /**
+     * Función para ordenar las columnas de la tabla.
+
+     */
+    function sortTable(columnIndex, isNumeric = false) {
+        const table = document.querySelector('#divLista .table');
+        const tbody = table.querySelector('tbody');
+        const rows = Array.from(tbody.querySelectorAll('tr'));
+        const currentDirection = table.getAttribute('data-sort-direction') || 'asc';
+        const newDirection = currentDirection === 'asc' ? 'desc' : 'asc';
+
+        rows.sort((a, b) => {
+            const aText = a.querySelector(`td:nth-child(${columnIndex + 1})`).textContent.trim();
+            const bText = b.querySelector(`td:nth-child(${columnIndex + 1})`).textContent.trim();
+
+            if (isNumeric) {
+                return newDirection === 'asc' ? parseFloat(aText) - parseFloat(bText) : parseFloat(bText) - parseFloat(aText);
+            } else {
+                return newDirection === 'asc' ? aText.localeCompare(bText) : bText.localeCompare(aText);
+            }
+        });
+
+        table.setAttribute('data-sort-direction', newDirection);
+        tbody.innerHTML = '';
+        rows.forEach(row => tbody.appendChild(row));
+    }
+
+    /**
+     * Añade eventos de ordenación a los encabezados de columna.
+     */
+    function attachSortEvents() {
+        document.querySelectorAll('#divLista .table th').forEach((th, index) => {
+            th.addEventListener('click', () => {
+                const isNumeric = th.classList.contains('numeric-column');
+                sortTable(index, isNumeric);
+            });
+        });
+    }
+
+    /**
+     * Función para filtrar filas por columna específica.
+
+     */
+    function filterColumn(columnIndex) {
+        const filterValue = document.querySelectorAll('.column-filter')[columnIndex].value.toLowerCase();
+        const rows = document.querySelectorAll('#divLista .table tbody tr');
+
+        rows.forEach(row => {
+            const cell = row.querySelectorAll('td')[columnIndex];
+            const cellText = cell.textContent.toLowerCase();
+            row.style.display = cellText.includes(filterValue) ? '' : 'none';
+        });
+    }
+
+    /**
+     * Añade eventos de entrada a los campos de filtro.
+     */
+    function attachFilterEvents() {
+        document.querySelectorAll('.column-filter').forEach((input, index) => {
+            input.addEventListener('input', () => filterColumn(index));
+        });
+    }
+
+    // URL para guardar un nuevo cliente
+    var urlCreate = "@Url.Content("~/Cliente/Save")";
+
+    /**
+     * Función para agregar un nuevo cliente.
+     */
+    function jsAdd() {
+        fetch(urlCreate, {
+            method: "POST",
+            body: JSON.stringify({
+                Nombre: document.getElementById("Nombre").value,
+                Cedula: document.getElementById("Cedula").value,
+                Direccion: document.getElementById("Direccion").value,
+                Telefono: document.getElementById("Telefono").value,
+                Apellido: document.getElementById("Apellido").value,
+                Email: document.getElementById("Email").value,
+                Fecha: document.getElementById("Fecha").value
+            }),
+            headers: {
+                'Accept': "application/json",
+                "Content-Type": "application/json"
+            }
+        }).then(function (response) {
+            if (response.ok) {
+                return response.text();
+            } else {
+                throw new Error("Error al ejecutar: " + response.statusText);
+            }
+        }).then(function (data) {
+            if (data != "1") {
+                alert(data);
+            } else {
+                document.location.href = "@Url.Content("~/Cliente/")";
+            }
+        }).catch(function (error) {
+            console.error('Error:', error);
+            alert("Se produjo un error: " + error.message);
+        });
+    }
+
+    // Inicializa la tabla con datos y eventos
+    Get();
+
+    // URL para actualizar un cliente
+    var urlUpdate = "@Url.Content("~/Cliente/Update")";
+
+    /**
+     * Función para editar un cliente existente.
+     */
+    function jsEdit() {
+        fetch(urlUpdate, {
+            method: "POST",
+            body: JSON.stringify({
+                Nombre: document.getElementById("Nombre").value,
+                Cedula: document.getElementById("Cedula").value,
+                Direccion: document.getElementById("Direccion").value,
+                Telefono: document.getElementById("Telefono").value,
+                Apellido: document.getElementById("Apellido").value,
+                Email: document.getElementById("Email").value,
+                FechaUp: document.getElementById("FechaUp").value,
+                Id: document.getElementById("Id").value
+            }),
+            headers: {
+                'Accept': "application/json",
+                "Content-Type": "application/json"
+            }
+        }).then(function (response) {
+            if (response.ok) {
+                return response.text();
+            } else {
+                throw new Error("Error al ejecutar: " + response.statusText);
+            }
+        }).then(function (data) {
+            if (data != "1") {
+                alert(data);
+            } else {
+                document.location.href = "@Url.Content("~/Cliente/")";
+            }
+        }).catch(function (error) {
+            console.error('Error:', error);
+            alert("Se produjo un error: " + error.message);
+        });
+    }
+
+    /**
+     * Función para eliminar un cliente.
+     * Muestra una confirmación antes de proceder con la eliminación.
+
+     */
+    function jsDelete(Id) {
+        // Mostrar un mensaje de confirmación
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: "No podrás revertir esto",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#FF6F61',
+            cancelButtonColor: '#00B0FF',
+            confirmButtonText: 'Sí, eliminarlo',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Solo proceder si el usuario confirma la eliminación
+                fetch("@Url.Content("~/Cliente/Delete")", {
+                    method: "POST",
+                    body: JSON.stringify({ Id: Id }),
+                    headers: {
+                        'Accept': "application/json",
+                        "Content-Type": "application/json"
+                    }
+                }).then(function (response) {
+                    if (response.ok) {
+                        return response.text();
+                    } else {
+                        throw new Error("Error al ejecutar: " + response.statusText);
+                    }
+                }).then(function (data) {
+                    if (data != "1") {
+                        Swal.fire({
+                            title: 'Error',
+                            text: data,
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Eliminado',
+                            text: 'El registro ha sido eliminado.',
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        });
+                        Get(); // Actualiza la lista de clientes
+                    }
+                }).catch(function (error) {
+                    console.error('Error:', error);
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Se produjo un error: ' + error.message,
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                });
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                // Opcional: Mostrar un mensaje de cancelación
+                Swal.fire(
+                    'Cancelado',
+                    'El registro no fue eliminado',
+                    'info'
+                );
+            }
+        });
+    }
+
+
+    //funcion apra exportar a excel
+    document.getElementById('exportToExcel').addEventListener('click', function () {
+        const table = document.querySelector('#divLista .table');
+        const wb = XLSX.utils.book_new();
+
+        // Obtener las cabeceras desde los placeholders de los inputs
+        const headers = Array.from(table.querySelectorAll('thead .header-input-container input')).map(input => input.placeholder.trim());
+        console.log('Headers:', headers);
+
+        // Obtener las filas de la tabla
+        const rows = Array.from(table.querySelectorAll('tbody tr')).map(tr => {
+            const cells = Array.from(tr.querySelectorAll('td')).map(td => td.innerText.trim());
+            console.log('Row Cells:', cells); // Imprimir celdas de cada fila
+            return cells;
+        });
+
+        // Verificar que se obtuvieron correctamente las cabeceras y las filas
+        console.log('Rows:', rows);
+
+        // Convertir en una hoja de cálculo
+        const ws = XLSX.utils.aoa_to_sheet([headers, ...rows]);
+        XLSX.utils.book_append_sheet(wb, ws, 'Clientes');
+
+        // Exportar el archivo
+        XLSX.writeFile(wb, 'tabla_clientes.xlsx');
+    });
+
+
+    // Función para exportar a PDF
+    document.getElementById('exportButton').addEventListener('click', function () {
+        html2canvas(document.querySelector('#divLista')).then(canvas => {
+            const imgData = canvas.toDataURL('image/png');
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF('p', 'mm', 'a4');
+
+            // Agregar el logo
+            const logoImg = '/Content/images/logo.png'; // Reemplaza con la ruta a tu imagen
+            pdf.addImage(logoImg, 'PNG', 10, 10, 30, 30);
+
+            // Agregar el nombre de la empresa
+            pdf.setFontSize(13);
+            pdf.text('On / Off Soluciones en linea', 50, 15);
+
+            // Agregar otros detalles
+            pdf.setFontSize(11);
+            pdf.text('Dirección de la Empresa', 50, 20);
+            pdf.text('Teléfono: (123) 456-7890', 50, 25);
+            pdf.text('Email: contacto@empresa.com', 50, 30);
+
+            // Agregar la tabla
+            const imgWidth = 210; // Ancho de la página en mm
+            const pageHeight = 295; // Altura de la página en mm
+            const imgHeight = canvas.height * imgWidth / canvas.width;
+            let heightLeft = imgHeight;
+
+            let position = 42; // Ajusta la posición para que esté debajo del encabezado
+            pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
+
+            while (heightLeft >= 0) {
+                position = heightLeft - imgHeight;
+                pdf.addPage();
+                pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+            }
+
+            pdf.save('tabla.pdf');
+        });
+    });
+
+</script>
+

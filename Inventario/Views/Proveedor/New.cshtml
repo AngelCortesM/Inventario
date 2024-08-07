@@ -1,0 +1,72 @@
+﻿@model Inventario.Models.ViewModel.ProveedorViewModel
+@{
+    ViewBag.Title = "New";
+    Layout = null;
+}
+
+<style>
+    .form-control {
+        font-size: 0.879rem;
+    }
+</style>
+
+<form class="form-control">
+    <div class="row">
+        <!-- Campos del formulario -->
+       
+        <div class="form-group col-md-6 col-lg-3">
+            @Html.LabelFor(d => d.Nit)
+            @Html.TextBoxFor(d => d.Nit, new { @class = "form-control", id = "Nit" })
+        </div>
+        <div class="form-group col-md-6 col-lg-3">
+            @Html.LabelFor(d => d.Nombre)
+            @Html.TextBoxFor(d => d.Nombre, new { @class = "form-control", id = "Nombre" })
+        </div>
+        <div class="form-group col-md-6 col-lg-3">
+            @Html.LabelFor(d => d.Celular)
+            @Html.TextBoxFor(d => d.Celular, new { @class = "form-control", id = "Celular" })
+        </div>
+        <div class="form-group col-md-6 col-lg-3">
+            @Html.LabelFor(d => d.Direccion)
+            @Html.TextBoxFor(d => d.Direccion, new { @class = "form-control", id = "Direccion" })
+        </div>
+        <div class="form-group col-md-6 col-lg-3">
+            @Html.LabelFor(d => d.Email)
+            @Html.TextBoxFor(d => d.Email, new { @class = "form-control", id = "Email" })
+        </div>
+        <div class="form-group col-md-6 col-lg-3">
+            @Html.LabelFor(d => d.Telefono_fijo)
+            @Html.TextBoxFor(d => d.Telefono_fijo, new { @class = "form-control", id = "Telefono_fijo" })
+        </div>
+        <div class="form-group col-md-6 col-lg-3">
+            @Html.LabelFor(d => d.Sitio_web)
+            @Html.TextBoxFor(d => d.Sitio_web, new { @class = "form-control", id = "Sitio_web" })
+        </div>
+        <div class="form-group col-md-6 col-lg-3">
+            @Html.LabelFor(d => d.Ciudad)
+            @Html.TextBoxFor(d => d.Ciudad, new { @class = "form-control", id = "Ciudad" })
+        </div>
+        <div class="form-group col-md-6 col-lg-3">
+            @Html.LabelFor(d => d.Pais)
+            @Html.TextBoxFor(d => d.Pais, new { @class = "form-control", id = "Pais" })
+        </div>
+        <div class="form-group col-md-6 col-lg-3">
+            @Html.LabelFor(d => d.Fecha_registro)
+            @Html.TextBoxFor(d => d.Fecha_registro, new { @class = "form-control", type = "date", id = "Fecha_registro" })
+        </div>
+
+        <!-- Botón de agregar -->
+        <div class="form-group col-md-6 col-lg-1">
+            <label></label>
+            <button type="button" class="btn btn-primary form-control" onclick="jsAdd()">Agregar</button>
+        </div>
+        <div class="form-group col-md-6 col-lg-1">
+            <label></label>
+            <button type="button" class="btn text-bg-danger form-control" onclick="NewC()">Cancelar</button>
+        </div>
+    </div>
+
+</form>
+
+
+

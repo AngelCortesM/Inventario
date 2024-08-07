@@ -1,0 +1,264 @@
+﻿@{
+    ViewBag.Title = "Lista de Productos"; // Define el título de la vista
+}
+
+<h4 class="text-center fw-bold mb-4" style="color:#343340;">@ViewBag.Title</h4> <!-- Muestra el título en el encabezado de la página -->
+<!-- Campo de búsqueda -->
+<div class="container mt-4">
+    <div class="mb-3">
+
+        <!-- Grupo de entrada con botones y campo de búsqueda -->
+        <div class="input-group" style="overflow-y: auto; /* Desplazamiento horizontal para contenido desbordante */">
+            <!-- Botón para crear un nuevo producto -->
+            <button class="btn btn-success" onclick="New()">
+                <i class="bi-plus-circle"> Crear </i>
+            </button>
+            <!-- Botón para recargar la lista de productos -->
+            <button class="btn btn-primary" onclick="Get()">
+                <i class="bi bi-arrow-clockwise"></i>
+            </button>
+            <!-- Campo de búsqueda con evento para filtrar resultados -->
+            <input type="text" id="searchInput" class="form-control" placeholder="Buscar por barra, descripción, etc." onkeyup="search()" />
+            <button id="exportToExcel" class="btn btn-success">
+                <i class="bi bi-file-excel"></i> Exportar todo a Excel
+            </button>
+            <button id="exportButton" class="btn btn-danger">
+                <i class="bi bi-file-pdf"></i> Exportar a PDF
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Contenedor para el contenido del formulario 'Nuevo' -->
+<div id="divNew" class="container">
+    <!-- El contenido del formulario 'Nuevo' se cargará aquí -->
+</div>
+
+<!-- Contenedor para el contenido del formulario 'Editar' -->
+<div id="divEdit" class="container">
+    <!-- El contenido del formulario 'Editar' se cargará aquí -->
+</div>
+
+<!-- Contenedor para la lista de productos -->
+<div id="divLista" class="container-fluid">
+    <!-- El contenido de la lista de productos se cargará aquí -->
+</div>
+
+
+
+
+<script>
+    // Define URLs para operaciones relacionadas con productos
+    const urlNew = "@Url.Content("~/Producto/New")"; // URL para el formulario de nuevo producto
+    const urlGet = "@Url.Content("~/Producto/List")"; // URL para obtener la lista de productos
+    const urlEdit = "@Url.Content("~/Producto/Edit")"; // URL para el formulario de edición
+    const urlGetProveedor = "@Url.Action("GetProveedor", "Producto")"; // URL para obtener la lista de proveedores
+    const urlCreate = "@Url.Content("~/Producto/Save")"; // URL para guardar un nuevo producto
+
+    // Variable para rastrear la visibilidad del formulario 'Nuevo'
+    let isNewContentVisible = false;
+
+    /**
+     * Función para manejar la visualización del formulario 'Nuevo'.
+     */
+    function New() {
+        const divNew = document.getElementById("divNew");
+
+        if (isNewContentVisible) {
+            // Verificar si hay texto en los campos de entrada
+            const inputs = divNew.querySelectorAll('input');
+            let hasText = false;
+            inputs.forEach(input => {
+                if (input.value.trim() !== "") {
+                    hasText = true;
+                }
+            });
+
+            if (hasText) {
+                // Si hay texto, muestra una alerta y no oculta el formulario
+                alert("No puedes cerrar el formulario mientras haya texto en los campos.");
+            } else {
+                // Si no hay texto, oculta el formulario
+                divNew.innerHTML = "";
+                isNewContentVisible = false;
+            }
+        } else {
+            // Si el contenido no está visible, lo carga y muestra
+            fetch(urlNew)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok.');
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    divNew.innerHTML = data;
+                    isNewContentVisible = true;
+
+                    // Ejecuta el script para cargar los proveedores después de cargar el contenido
+                    loadProveedores();
+                })
+                .catch(error => {
+                    console.error('There has been a problem with your fetch operation:', error);
+                });
+        }
+    }
+
+    /**
+     * Función para cargar la lista de productos.
+     */
+    function Get() {
+        fetch(urlGet)
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("divLista").innerHTML = data;
+                attachSortEvents(); // Añade eventos de clic a los encabezados después de cargar los datos
+                attachFilterEvents(); // Añade eventos de filtro después de cargar los datos
+            });
+    }
+
+    // Inicializa la tabla con datos y eventos
+    Get();
+
+    /**
+     * Función para cargar proveedores en el select.
+     */
+    // Función para cargar proveedores en el menú desplegable
+    function loadProveedores() {
+        const proveedorList = document.getElementById("Proveedor_list");
+        if (!proveedorList) {
+            console.error('El elemento de la lista de proveedores no se encontró.');
+            return;
+        }
+
+        fetch(urlGetProveedor)
+            .then(response => response.json())
+            .then(data => {
+                proveedorList.innerHTML = ''; // Limpia opciones existentes
+                data.forEach(proveedor => {
+                    const li = document.createElement("li");
+                    li.textContent = proveedor.Nombre;
+                    li.dataset.id = proveedor.Id;
+                    li.onclick = function () {
+                        selectProveedor(proveedor.Id, proveedor.Nombre);
+                    };
+                    proveedorList.appendChild(li);
+                });
+            })
+            .catch(error => console.error('Error fetching proveedores:', error));
+    }
+
+    // Función para filtrar y mostrar las opciones en el menú desplegable
+    function filterProveedores() {
+        const searchInput = document.getElementById("Proveedor_search").value.toLowerCase();
+        const proveedorList = document.getElementById("Proveedor_list");
+
+        if (!proveedorList) {
+            console.error('El elemento de la lista de proveedores no se encontró.');
+            return;
+        }
+
+        // Muestra el menú de opciones
+        proveedorList.style.display = searchInput ? 'block' : 'none';
+
+        // Filtra las opciones del menú
+        Array.from(proveedorList.children).forEach(li => {
+            const text = li.textContent.toLowerCase();
+            li.style.display = text.includes(searchInput) ? 'block' : 'none';
+        });
+    }
+
+    // Función para seleccionar un proveedor del menú desplegable
+    function filterProveedores() {
+        const searchInput = document.getElementById('Proveedor_search');
+        const list = document.getElementById('Proveedor_list');
+        const query = searchInput.value.toLowerCase();
+
+        if (query.length === 0) {
+            list.style.display = 'none';
+            return;
+        }
+
+        fetch(urlGetProveedor)
+            .then(response => response.json())
+            .then(data => {
+                list.innerHTML = '';
+                const filteredData = data.filter(proveedor => proveedor.Nombre.toLowerCase().includes(query));
+
+                if (filteredData.length > 0) {
+                    filteredData.forEach(proveedor => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = proveedor.Nombre;
+                        listItem.dataset.id = proveedor.Id; // Almacena el ID en el data attribute
+                        listItem.onclick = function () {
+                            selectProveedor(proveedor.Id, proveedor.Nombre);
+                        };
+                        list.appendChild(listItem);
+                    });
+                    list.style.display = 'block';
+                } else {
+                    list.style.display = 'none';
+                }
+            })
+            .catch(error => console.error('Error fetching proveedores:', error));
+    }
+
+    function selectProveedor(id, nombre) {
+        document.getElementById('Proveedor_search').value = nombre;
+        document.getElementById('Proveedor_id').value = id; // Almacena el ID en el campo oculto
+        document.getElementById('Proveedor_list').style.display = 'none';
+    }
+
+    // Oculta la lista si el usuario hace clic fuera de ella
+    document.addEventListener('click', function (e) {
+        const list = document.getElementById('Proveedor_list');
+        if (!list.contains(e.target) && e.target.id !== 'Proveedor_search') {
+            list.style.display = 'none';
+        }
+    });
+
+    // Cargar proveedores al inicio
+    document.addEventListener("DOMContentLoaded", function () {
+        loadProveedores();
+    });
+
+    /**
+     * Función para agregar un nuevo producto.
+     */
+    function jsAdd() {
+        fetch(urlCreate, {
+            method: "POST",
+            body: JSON.stringify({
+                Cantidad: document.getElementById("Cantidad").value,
+                Proveedor_id: document.getElementById("Proveedor_id").value,
+                Valor: document.getElementById("Valor").value,
+                Descripcion: document.getElementById("Descripcion").value,
+                Estado: document.getElementById("Estado").value,
+                Fecha: document.getElementById("Fecha").value,
+                Nombre: document.getElementById("Nombre").value,
+                Barras: document.getElementById("Barras").value,
+                Categoria: document.getElementById("Categoria").value,
+                Costo: document.getElementById("Costo").value
+            }),
+            headers: {
+                'Accept': "application/json",
+                "Content-Type": "application/json"
+            }
+        }).then(function (response) {
+            if (response.ok) {
+                return response.text();
+            } else {
+                throw new Error("Error al ejecutar: " + response.statusText);
+            }
+        }).then(function (data) {
+            if (data != "1") {
+                alert(data);
+            } else {
+                document.location.href = "@Url.Content("~/Producto/")";
+            }
+        }).catch(function (error) {
+            console.error('Error:', error);
+            alert("Se produjo un error: " + error.message);
+        });
+    }
+</script>
