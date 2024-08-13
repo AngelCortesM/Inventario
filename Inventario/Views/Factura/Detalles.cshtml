@@ -1,0 +1,184 @@
+﻿@model Inventario.Models.ViewModel.FacturaDetallesViewModel
+
+<link rel="stylesheet" type="text/css" href="~/Content/css/List.css">
+<style>
+
+
+
+    ul.list-unstyled {
+        line-height: 0.8; 
+    }
+
+        ul.list-unstyled li {
+            margin-bottom: 0.25rem; 
+        }
+
+   
+
+    ul.list-unstyled li strong {
+        font-weight: 700;
+
+    }
+
+
+
+    .mt-5 {
+        background-color: #fadad15e;
+        line-height: 0.1;
+        border-radius: 1.25rem;
+      
+    }
+ 
+
+
+    .mt-4 {
+        text-align: center;
+        line-height: 0.1;
+    }
+
+    .text-center {
+        text-align: center;
+  
+
+    }
+</style>
+
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="invoice-header text-center mb-4">
+                    <h2>Factura</h2>
+                    <p class="text-muted">Detalles de la factura</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <h5>Datos de la Factura</h5>
+                <ul class="list-unstyled">
+                    <li><strong>ID de Factura:</strong> @Model.FacturaId</li>
+                    <li><strong>Número de Factura:</strong> @Model.NumeroFactura</li>
+                    <li><strong>Fecha:</strong> @(Model.Fecha.HasValue ? Model.Fecha.Value.ToString("dd/MM/yyyy") : "Fecha no disponible")</li>
+                    <li><strong>Fecha de Pago:</strong> @(Model.FechaPago.HasValue ? Model.FechaPago.Value.ToString("dd/MM/yyyy") : "Fecha no disponible")</li>
+                    <li><strong>Estado:</strong> @Model.Estado</li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h5>Cliente</h5>
+                <ul class="list-unstyled">
+                    <li><strong>Nombre del Cliente:</strong> @Model.NombreCliente</li>
+                    <li><strong>Método de Pago:</strong> @Model.MetodoPago</li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h5>Detalles Financieros</h5>
+                <ul class="list-unstyled">
+                    <li><strong>IVA:</strong> @(Model.Iva.HasValue ? Model.Iva.Value.ToString("C") : "No disponible")</li>
+                    <li><strong>Descuento:</strong> @(Model.Descuento.HasValue ? Model.Descuento.Value.ToString("C") : "No disponible")</li>
+                    <li><strong>Base:</strong> @(Model.Base.HasValue ? Model.Base.Value.ToString("C") : "No disponible")</li>
+                    <li><strong>Total:</strong> @(Model.Total.HasValue ? Model.Total.Value.ToString("C") : "No disponible")</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <h5>Observaciones</h5>
+                <p>@Model.Observaciones</p>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container-fluid">
+
+        <h3 class="text-center">Productos</h3>
+        <div class="table-container">
+            <table class="table table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>
+                            <div class="header-input-container">
+                                <i class="bi bi-box icon-button"></i>
+                                <input type="text" class="column-filter" placeholder="ID Producto">
+                            </div>
+                        </th>
+                        <th>
+                            <div class="header-input-container">
+                                <i class="bi bi-box-seam icon-button"></i>
+                                <input type="text" class="column-filter" placeholder="Nombre Producto">
+                            </div>
+                        </th>
+                        <th>
+                            <div class="header-input-container">
+                                <i class="bi bi-bar-chart icon-button"></i>
+                                <input type="text" class="column-filter" placeholder="Cantidad">
+                            </div>
+                        </th>
+                        <th>
+                            <div class="header-input-container">
+                                <i class="bi bi-cash icon-button"></i>
+                                <input type="text" class="column-filter" placeholder="Precio Unitario">
+                            </div>
+                        </th>
+                        <th>
+                            <div class="header-input-container">
+                                <i class="bi bi-calculator icon-button"></i>
+                                <input type="text" class="column-filter" placeholder="Base">
+                            </div>
+                        </th>
+                        <th>
+                            <div class="header-input-container">
+                                <i class="bi bi-percent icon-button"></i>
+                                <input type="text" class="column-filter" placeholder="IVA">
+                            </div>
+                        </th>
+                        <th>
+                            <div class="header-input-container">
+                                <i class="bi bi-cash-stack icon-button"></i>
+                                <input type="text" class="column-filter" placeholder="Valor IVA">
+                            </div>
+                        </th>
+                        <th>
+                            <div class="header-input-container">
+                                <i class="bi bi-dash-circle icon-button"></i>
+                                <input type="text" class="column-filter" placeholder="Descuento">
+                            </div>
+                        </th>
+                        <th>
+                            <div class="header-input-container">
+                                <i class="bi bi-cash-stack icon-button"></i>
+                                <input type="text" class="column-filter" placeholder="Valor Descuento">
+                            </div>
+                        </th>
+                        <th>
+                            <div class="header-input-container">
+                                <i class="bi bi-cash-stack icon-button"></i>
+                                <input type="text" class="column-filter" placeholder="Precio Total">
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var producto in Model.Productos)
+                    {
+                        <tr>
+                            <td>@producto.ProductoId</td>
+                            <td>@producto.NombreProducto</td>
+                            <td>@producto.Cantidad</td>
+                            <td>@producto.PrecioUnitario.ToString("C")</td>
+                            <td>@(producto.Base.HasValue ? producto.Base.Value.ToString("C") : "No disponible")</td>
+                            <td>@(producto.Iva.HasValue ? producto.Iva.Value.ToString("C") : "No disponible")</td>
+                            <td>@(producto.ValorIva.HasValue ? producto.ValorIva.Value.ToString("C") : "No disponible")</td>
+                            <td>@(producto.Descuento.HasValue ? producto.Descuento.Value.ToString("C") : "No disponible")</td>
+                            <td>@(producto.ValorDescuento.HasValue ? producto.ValorDescuento.Value.ToString("C") : "No disponible")</td>
+                            <td>@(producto.PrecioTotal.HasValue ? producto.PrecioTotal.Value.ToString("C") : "No disponible")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>

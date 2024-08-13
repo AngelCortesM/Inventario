@@ -136,7 +136,7 @@ footer {
 }
 
 /* Botones de acción */
-.btn1, .btn2 {
+.btn1, .btn2, .btn3 {
     font-size: 1rem; /* Tamaño del ícono */
     padding: 5px; /* Espacio interior del botón */
     display: flex; /* Alinea el ícono dentro del botón */
@@ -168,9 +168,19 @@ footer {
     transition: background 0.3s; /* Transición suave del fondo */
 }
 
+
+
     .btn2:hover {
         background: #0081CB; /* Azul más oscuro al pasar el cursor */
     }
+
+/* Estilo para el botón de document */
+.btn3 {
+   background: #FFB347; /* naranja pastel para editar */
+    color: white; /* Color del texto */
+    border: none; /* Sin borde */
+    transition: background 0.3s; /* Transición suave del fondo */
+}
 
 /* Contenedor del campo de entrada */
 .header-input-container {

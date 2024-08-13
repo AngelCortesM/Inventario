@@ -1,0 +1,136 @@
+﻿@using Inventario.Models.ViewModel
+@model List<ListFacturaViewModel>
+@{
+    Layout = null;
+}
+
+
+<link rel="stylesheet" type="text/css" href="~/Content/css/List.css">
+
+<div id="divLista" class="table-container">
+    <table class="table table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>
+                    <div class="header-input-container">
+                        <i class="bi bi-file-earmark-text-fill icon-button"></i>
+                        <input type="text" class="column-filter column-id" placeholder="Factura ID">
+                    </div>
+                </th>
+                <th>
+                    <div class="header-input-container">
+                        <i class="bi bi-person-fill icon-button"></i>
+                        <input type="text" class="column-filter" placeholder="Cliente ID">
+                    </div>
+                </th>
+                <th>
+                    <div class="header-input-container">
+                        <i class="bi bi-person-fill icon-button"></i>
+                        <input type="text" class="column-filter" placeholder="Nombre Cliente">
+                    </div>
+                </th>
+                <th>
+                    <div class="header-input-container">
+                        <i class="bi bi-calendar-fill icon-button"></i>
+                        <input type="text" class="column-filter" placeholder="Fecha">
+                    </div>
+                </th>
+                <th>
+                    <div class="header-input-container">
+                        <i class="bi bi-calendar-check-fill icon-button"></i>
+                        <input type="text" class="column-filter" placeholder="Fecha Pago">
+                    </div>
+                </th>
+                <th>
+                    <div class="header-input-container">
+                        <i class="bi bi-info-circle-fill icon-button"></i>
+                        <input type="text" class="column-filter" placeholder="Estado">
+                    </div>
+                </th>
+                <th>
+                    <div class="header-input-container">
+                        <i class="bi bi-receipt-cutoff icon-button"></i>
+                        <input type="text" class="column-filter" placeholder="N° Factura">
+                    </div>
+                </th>
+                <th>
+                    <div class="header-input-container">
+                        <i class="bi bi-credit-card-fill icon-button"></i>
+                        <input type="text" class="column-filter" placeholder="Método Pago">
+                    </div>
+                </th>
+                <th>
+                    <div class="header-input-container">
+                        <i class="bi bi-chat-fill icon-button"></i>
+                        <input type="text" class="column-filter" placeholder="Observaciones">
+                    </div>
+                </th>
+                <th>
+                    <div class="header-input-container">
+                        <i class="bi bi-percent icon-button"></i>
+                        <input type="text" class="column-filter" placeholder="IVA">
+                    </div>
+                </th>
+                <th>
+                    <div class="header-input-container">
+                        <i class="bi bi-tag-fill icon-button"></i>
+                        <input type="text" class="column-filter" placeholder="Descuento">
+                    </div>
+                </th>
+                <th>
+                    <div class="header-input-container">
+                        <i class="bi bi-calculator-fill icon-button"></i>
+                        <input type="text" class="column-filter" placeholder="Base">
+                    </div>
+                </th>
+                <th>
+                    <div class="header-input-container">
+                        <i class="bi bi-wallet-fill icon-button"></i>
+                        <input type="text" class="column-filter" placeholder="Total">
+                    </div>
+                </th>
+                <th>
+                    <div class="header-input-container">
+                        <span>Acciones</span>
+                    </div>
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var oFactura in Model)
+            {
+                <tr>
+                    <td>@oFactura.FacturaId</td>
+                    <td>@oFactura.ClienteId</td>
+                    <td>@oFactura.NombreCliente</td>
+                    <td>@(oFactura.Fecha.HasValue ? oFactura.Fecha.Value.ToString("d") : "N/A")</td>
+                    <td>@(oFactura.FechaPago.HasValue ? oFactura.FechaPago.Value.ToString("d") : "N/A")</td>
+                    <td>@oFactura.Estado</td>
+                    <td>@oFactura.NumeroFactura</td>
+                    <td>@oFactura.MetodoPago</td>
+                    <td>@oFactura.Observaciones</td>
+                    <td>@oFactura.Iva</td>
+                    <td>@oFactura.Descuento</td>
+                    <td>@oFactura.Base</td>
+                    <td>@oFactura.Total</td>
+
+                    <td>
+                        <div class="d-flex">
+                            Ver -> <a href="@Url.Action("Detalles", "Factura", new { id = oFactura.FacturaId })">
+                                <div class="btn3">
+                                    <i class="bi bi-file-text-fill"></i>
+                                </div>
+                            </a>
+                            @*<a onclick="jsDelete(@oFactura.FacturaId)">
+            <div class="btn1">
+                <i class="text-dark bi bi-backspace-fill"></i>
+            </div>
+        </a>*@
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

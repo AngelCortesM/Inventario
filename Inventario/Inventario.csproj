@@ -129,6 +129,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
+    <Compile Include="Controllers\FacturaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
     <Compile Include="Controllers\ProveedorController.cs" />
@@ -166,7 +167,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ViewModel\ClienteViewModel.cs" />
+    <Compile Include="Models\ViewModel\FacturaDetallesViewModel.cs" />
     <Compile Include="Models\ViewModel\ListClienteViewModel.cs" />
+    <Compile Include="Models\ViewModel\ListFacturaViewModel.cs" />
     <Compile Include="Models\ViewModel\ListProductoViewModel.cs" />
     <Compile Include="Models\ViewModel\ListProveedorViewModel.cs" />
     <Compile Include="Models\ViewModel\ProductoViewModel.cs" />
@@ -258,6 +261,9 @@
     <Content Include="Views\Producto\List.cshtml" />
     <Content Include="Views\Producto\New.cshtml" />
     <Content Include="Views\Producto\Edit.cshtml" />
+    <Content Include="Views\Factura\Index.cshtml" />
+    <Content Include="Views\Factura\List.cshtml" />
+    <Content Include="Views\Factura\Detalles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
