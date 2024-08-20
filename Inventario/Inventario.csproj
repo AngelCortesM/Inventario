@@ -168,6 +168,7 @@
     </Compile>
     <Compile Include="Models\ViewModel\ClienteViewModel.cs" />
     <Compile Include="Models\ViewModel\FacturaDetallesViewModel.cs" />
+    <Compile Include="Models\ViewModel\FacturaViewModel.cs" />
     <Compile Include="Models\ViewModel\ListClienteViewModel.cs" />
     <Compile Include="Models\ViewModel\ListFacturaViewModel.cs" />
     <Compile Include="Models\ViewModel\ListProductoViewModel.cs" />
@@ -263,6 +264,7 @@
     <Content Include="Views\Factura\Index.cshtml" />
     <Content Include="Views\Factura\List.cshtml" />
     <Content Include="Views\Factura\Detalles.cshtml" />
+    <Content Include="Views\Factura\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,307 @@
+﻿@model Inventario.Models.ViewModel.FacturaViewModel
+
+
+@{
+    ViewBag.Title = "Agregar Factura";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<!-- Formulario para agregar la cabecera de la factura -->
+
+
+@Html.AntiForgeryToken()
+
+<h3>Datos de la Factura</h3>
+
+<form id="form-factura" class="form-control">
+    <div class="row">
+        <div class="form-group col-md-3 col-lg-2">
+            @Html.LabelFor(model => model.ClienteId, "Cliente")
+            @Html.DropDownListFor(model => model.ClienteId, Model.ClienteList, "Selecciona un cliente", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.ClienteId)
+        </div>
+
+        <div class="form-group col-md-3 col-lg-1">
+            @Html.LabelFor(model => model.Fecha)
+            @Html.TextBoxFor(model => model.Fecha, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+            @Html.ValidationMessageFor(model => model.Fecha)
+        </div>
+
+        <div class="form-group col-md-3 col-lg-1">
+            @Html.LabelFor(model => model.FechaPago)
+            @Html.TextBoxFor(model => model.FechaPago, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+            @Html.ValidationMessageFor(model => model.FechaPago)
+        </div>
+
+        <div class="form-group col-md-3 col-lg-1">
+            @Html.LabelFor(model => model.Estado)
+            @Html.TextBoxFor(model => model.Estado, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Estado)
+        </div>
+
+        <div class="form-group col-md-3 col-lg-1">
+            @Html.LabelFor(model => model.NumeroFactura)
+            @Html.TextBoxFor(model => model.NumeroFactura, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.NumeroFactura)
+        </div>
+
+        <div class="form-group col-md-3 col-lg-1">
+            @Html.LabelFor(model => model.MetodoPago)
+            @Html.TextBoxFor(model => model.MetodoPago, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.MetodoPago)
+        </div>
+
+        <div class="form-group col-md-3 col-lg-1">
+            @Html.LabelFor(model => model.Observaciones)
+            @Html.TextAreaFor(model => model.Observaciones, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Observaciones)
+        </div>
+
+        <div class="form-group col-md-3 col-lg-1">
+            @Html.LabelFor(model => model.Iva)
+            @Html.TextBoxFor(model => model.Iva, new { @class = "form-control", type = "number", step = "0.01", @readonly = "readonly" }) <!-- Aquí se usa readonly para que no sea modificable -->
+            @Html.ValidationMessageFor(model => model.Iva)
+        </div>
+
+
+
+        <div class="form-group col-md-3 col-lg-1">
+            @Html.LabelFor(model => model.Descuento)
+            @Html.TextBoxFor(model => model.Descuento, new { @class = "form-control", type = "number", step = "0.01" })
+            @Html.ValidationMessageFor(model => model.Descuento)
+        </div>
+
+        <div class="form-group col-md-3 col-lg-1">
+            @Html.LabelFor(model => model.DescuentoValue, "Descuento Total")
+            @Html.TextBoxFor(model => model.DescuentoValue, new { @class = "form-control", type = "number", step = "0.01", @readonly = "readonly" })
+            @Html.ValidationMessageFor(model => model.DescuentoValue)
+        </div>
+        <div class="form-group col-md-3 col-lg-1">
+            @Html.LabelFor(model => model.Base)
+            @Html.TextBoxFor(model => model.Base, new { @class = "form-control", type = "number", step = "0.01", @readonly = "readonly" })
+            @Html.ValidationMessageFor(model => model.Base)
+        </div>
+
+        <div class="form-group col-md-3 col-lg-1">
+            @Html.LabelFor(model => model.Total)
+            @Html.TextBoxFor(model => model.Total, new { @class = "form-control", type = "number", step = "0.01", @readonly = "readonly" })
+            @Html.ValidationMessageFor(model => model.Total)
+        </div>
+    </div>
+
+
+    <h3>Agregar Productos</h3>
+    <input type="hidden" id="productos-json" name="productos-json" />
+
+
+    <div id="productos-container">
+        <input type="hidden" name="producto_id" id="producto_id" value="" />
+        <div class="row">
+            <!-- Formulario para agregar productos -->
+            <div class="form-group col-lg-2">
+                @Html.Label("Producto", "Producto")
+                @Html.DropDownList("ProductoSelect", Model.ProductoList, "Selecciona un producto", new { @class = "form-control" })
+            </div>
+
+            <div class="form-group col-lg-2">
+                @Html.Label("Cantidad", "Cantidad")
+                @Html.TextBox("Cantidad", "", new { @class = "form-control", type = "number", step = "1" })
+            </div>
+
+            <div class="form-group col-lg-2">
+                @Html.Label("Costo", "Costo")
+                @Html.TextBox("Costo", "", new { @class = "form-control", type = "number", step = "0.01" })
+            </div>
+
+
+
+            <div class="form-group col-lg-2">
+                <label></label>
+                <button type="button" id="add-product-button" class="form-control btn btn-primary">Agregar Producto</button>
+            </div>
+        </div>
+
+    </div>
+
+
+    <h3>Productos Agregados</h3>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Costo</th>
+                <th>Total</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="productos-list">
+            <!-- Los productos agregados se mostrarán aquí -->
+        </tbody>
+    </table>
+
+    <div class="form-group">
+
+        <input type="submit" value="Guardar Factura" class="btn btn-success" />
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+$(document).ready(function () {
+    var productosList = []; // Lista de productos agregados
+
+    // Convertir la lista de productos con costos a JSON
+    var productosCostos = @Html.Raw(Json.Encode(ViewBag.ProductoCostos));
+
+    // Listener para cuando se cambia la selección en el dropdown de productos
+    $('#ProductoSelect').change(function () {
+        var selectedProductId = $(this).val();
+        var selectedProduct = productosCostos.find(function (item) {
+            return item.Id == selectedProductId;
+        });
+
+        if (selectedProduct) {
+            $('#producto_id').val(selectedProductId); // Actualiza el campo oculto
+            $('#Costo').val(selectedProduct.Costo); // Asignar el costo al input
+        } else {
+            $('#producto_id').val('');
+            $('#Costo').val(''); // Vaciar el campo si no se encuentra el producto
+        }
+    });
+
+    // Función para agregar un producto
+    $('#add-product-button').click(function () {
+        var productoId = $('#producto_id').val(); // Obtener el ID del producto del campo oculto
+        var productoText = $('#ProductoSelect option:selected').text();
+        var cantidad = $('#Cantidad').val();
+        var costo = $('#Costo').val();
+        var total = (parseFloat(cantidad) * parseFloat(costo)).toFixed(2);
+
+        if (productoId && cantidad && costo) {
+            // Agrega el producto a la lista
+            productosList.push({
+                Id: productoId, // Usar 'Id' para coincidir con el controlador
+                ProductoText: productoText,
+                Cantidad: cantidad,
+                Costo: costo,
+                Total: total
+            });
+
+            // Actualiza la tabla de productos
+            updateProductosTable();
+            // Resetea los campos de producto
+            resetProductFields();
+        } else {
+            alert('Por favor, complete todos los campos.');
+        }
+    });
+
+    // Función para actualizar la tabla de productos
+    function updateProductosTable() {
+        var tableBody = $('#productos-list');
+        tableBody.empty();
+
+        productosList.forEach(function (item, index) {
+            tableBody.append(`
+                <tr data-producto-id="${item.Id}">
+                    <td>${item.Id}</td>
+                    <td>${item.ProductoText}</td>
+                    <td>${item.Cantidad}</td>
+                    <td>${item.Costo}</td>
+                    <td>${item.Total}</td>
+                    <td><button type="button" class="btn btn-danger btn-sm" onclick="removeProduct(${index})">Eliminar</button></td>
+                </tr>
+            `);
+        });
+
+        calculateTotals();
+
+        // Actualizar el campo oculto con la lista de productos en formato JSON
+        $('#productos-json').val(JSON.stringify(productosList));
+    }
+
+    // Función para reiniciar los campos del producto
+    function resetProductFields() {
+        $('#ProductoSelect').val('');
+        $('#Cantidad').val('');
+        $('#Costo').val('');
+        $('#producto_id').val(''); // Limpiar el campo oculto
+    }
+
+    // Función para eliminar un producto
+    window.removeProduct = function (index) {
+        productosList.splice(index, 1);
+        updateProductosTable();
+    };
+
+    // Función para calcular los totales
+    function calculateTotals() {
+        var totalBase = productosList.reduce(function (sum, item) {
+            return sum + (parseFloat(item.Costo) * parseFloat(item.Cantidad));
+        }, 0);
+
+        var ivaPercentage = 0.19; // Porcentaje de IVA
+        var descuento = $('#Descuento').val() ? parseFloat($('#Descuento').val()) : 0;
+
+        var totalIva = totalBase * ivaPercentage;
+        var totalDescuento = totalBase * (descuento / 100);
+        var totalFinal = totalBase + totalIva - totalDescuento;
+
+        $('#Base').val(totalBase.toFixed(2));
+        $('#Iva').val(totalIva.toFixed(2));
+        $('#DescuentoValue').val(totalDescuento.toFixed(2));
+        $('#Total').val(totalFinal.toFixed(2));
+    }
+
+    // Actualizar totales cuando el descuento cambie
+    $('#Descuento').on('input', function () {
+        calculateTotals();
+    });
+
+    // Función para enviar los datos del formulario usando fetch
+    $('#form-factura').submit(function (event) {
+        event.preventDefault(); // Evitar el envío tradicional del formulario
+
+        var formData = $(this).serializeArray();
+        var data = {};
+
+        formData.forEach(function (field) {
+            data[field.name] = field.value;
+        });
+
+        data.Productos = JSON.parse($('#productos-json').val());
+
+        fetch('@Url.Action("Save", "Factura")', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok.');
+            }
+            return response.json();
+        })
+        .then(result => {
+            if (result.success) {
+                window.location.href = result.redirectUrl;
+            } else {
+                alert(result.errors.join('\n'));
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Se produjo un error al guardar la factura.');
+        });
+    });
+});
+    </script>
+
+}
