@@ -106,28 +106,52 @@
 
     /**
      * Función para ordenar las columnas de la tabla.
-
      */
     function sortTable(columnIndex, isNumeric = false) {
+        // Selecciona la tabla con el ID 'divLista' y la clase 'table'.
+        // Esto obtiene el elemento de la tabla donde se realizará la ordenación.
         const table = document.querySelector('#divLista .table');
+
+        // Obtiene el cuerpo de la tabla (tbody), donde están las filas (tr).
         const tbody = table.querySelector('tbody');
+
+        // Convierte la lista de filas (tr) del cuerpo de la tabla a un array para poder manipularlo.
         const rows = Array.from(tbody.querySelectorAll('tr'));
+
+        // Obtiene la dirección de ordenación actual desde el atributo 'data-sort-direction' de la tabla.
+        // Si no se encuentra, se asume que es 'asc' (ascendente).
         const currentDirection = table.getAttribute('data-sort-direction') || 'asc';
+
+        // Determina la nueva dirección de ordenación: si la actual es 'asc', cambia a 'desc' y viceversa.
         const newDirection = currentDirection === 'asc' ? 'desc' : 'asc';
 
+        // Ordena las filas en base al contenido de la columna especificada por 'columnIndex'.
         rows.sort((a, b) => {
+            // Obtiene el texto de la celda de la columna especificada para las filas 'a' y 'b'.
+            // 'columnIndex + 1' porque los índices de columnas en CSS son basados en 1.
             const aText = a.querySelector(`td:nth-child(${columnIndex + 1})`).textContent.trim();
             const bText = b.querySelector(`td:nth-child(${columnIndex + 1})`).textContent.trim();
 
+            // Si 'isNumeric' es true, realiza una comparación numérica.
             if (isNumeric) {
-                return newDirection === 'asc' ? parseFloat(aText) - parseFloat(bText) : parseFloat(bText) - parseFloat(aText);
+                return newDirection === 'asc'
+                    ? parseFloat(aText) - parseFloat(bText) // Ordena ascendente
+                    : parseFloat(bText) - parseFloat(aText); // Ordena descendente
             } else {
-                return newDirection === 'asc' ? aText.localeCompare(bText) : bText.localeCompare(aText);
+                // Si 'isNumeric' es false, realiza una comparación alfabética.
+                return newDirection === 'asc'
+                    ? aText.localeCompare(bText) // Ordena ascendente
+                    : bText.localeCompare(aText); // Ordena descendente
             }
         });
 
+        // Actualiza el atributo 'data-sort-direction' de la tabla con la nueva dirección de ordenación.
         table.setAttribute('data-sort-direction', newDirection);
+
+        // Limpia el contenido actual del cuerpo de la tabla.
         tbody.innerHTML = '';
+
+        // Reanexa las filas en el nuevo orden al cuerpo de la tabla.
         rows.forEach(row => tbody.appendChild(row));
     }
 
