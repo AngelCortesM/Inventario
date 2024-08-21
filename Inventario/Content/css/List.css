@@ -135,6 +135,9 @@ footer {
     justify-content: center; /* Centra el ícono horizontalmente */
 }
 
+.form {
+    background-color: #33333320;
+}
 /* Botones de acción */
 .btn1, .btn2, .btn3 {
     font-size: 1rem; /* Tamaño del ícono */

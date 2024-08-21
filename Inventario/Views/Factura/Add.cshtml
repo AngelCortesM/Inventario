@@ -2,98 +2,144 @@
 
 
 @{
-    ViewBag.Title = "Agregar Factura";
+    ViewBag.Title = "Formulario para la creacion de Facturas";
 }
 
-<h2>@ViewBag.Title</h2>
-
+<h4 class="text-center fw-bold mb-4" style="color:#343340;">@ViewBag.Title</h4>
+<link rel="stylesheet" type="text/css" href="~/Content/css/List.css">
 <!-- Formulario para agregar la cabecera de la factura -->
-
+<style>
+    .form-control {
+        font-size: 0.900rem;
+    }
+</style>
 
 @Html.AntiForgeryToken()
 
-<h3>Datos de la Factura</h3>
-
-<form id="form-factura" class="form-control">
-    <div class="row">
-        <div class="form-group col-md-3 col-lg-2">
-            @Html.LabelFor(model => model.ClienteId, "Cliente")
-            @Html.DropDownListFor(model => model.ClienteId, Model.ClienteList, "Selecciona un cliente", new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.ClienteId)
-        </div>
-
-        <div class="form-group col-md-3 col-lg-1">
-            @Html.LabelFor(model => model.Fecha)
-            @Html.TextBoxFor(model => model.Fecha, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
-            @Html.ValidationMessageFor(model => model.Fecha)
-        </div>
-
-        <div class="form-group col-md-3 col-lg-1">
-            @Html.LabelFor(model => model.FechaPago)
-            @Html.TextBoxFor(model => model.FechaPago, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
-            @Html.ValidationMessageFor(model => model.FechaPago)
-        </div>
-
-        <div class="form-group col-md-3 col-lg-1">
-            @Html.LabelFor(model => model.Estado)
-            @Html.TextBoxFor(model => model.Estado, new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.Estado)
-        </div>
-
-        <div class="form-group col-md-3 col-lg-1">
-            @Html.LabelFor(model => model.NumeroFactura)
-            @Html.TextBoxFor(model => model.NumeroFactura, new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.NumeroFactura)
-        </div>
-
-        <div class="form-group col-md-3 col-lg-1">
-            @Html.LabelFor(model => model.MetodoPago)
-            @Html.TextBoxFor(model => model.MetodoPago, new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.MetodoPago)
-        </div>
-
-        <div class="form-group col-md-3 col-lg-1">
-            @Html.LabelFor(model => model.Observaciones)
-            @Html.TextAreaFor(model => model.Observaciones, new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.Observaciones)
-        </div>
-
-        <div class="form-group col-md-3 col-lg-1">
-            @Html.LabelFor(model => model.Iva)
-            @Html.TextBoxFor(model => model.Iva, new { @class = "form-control", type = "number", step = "0.01", @readonly = "readonly" }) <!-- Aquí se usa readonly para que no sea modificable -->
-            @Html.ValidationMessageFor(model => model.Iva)
-        </div>
 
 
+<form id="form-factura" class="form form-control">
+    <h5 class="text-center fw-bold mb-4" style="color:#343340;">
+        <i class="bi bi-file-earmark-text"></i> Datos de la Factura
+    </h5>
+    <div class=" mt-6">
+        <div class="row">
+            <div class="form-group col-md-3 col-lg-2">
+                @Html.LabelFor(model => model.ClienteId, "Cliente")
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-person-add"></i></span>
+                    @Html.DropDownListFor(model => model.ClienteId, Model.ClienteList, "Selecciona un cliente", new { @class = "form-control" })
+                </div>
+                @Html.ValidationMessageFor(model => model.ClienteId)
+            </div>
 
-        <div class="form-group col-md-3 col-lg-1">
-            @Html.LabelFor(model => model.Descuento)
-            @Html.TextBoxFor(model => model.Descuento, new { @class = "form-control", type = "number", step = "0.01" })
-            @Html.ValidationMessageFor(model => model.Descuento)
-        </div>
+            <div class="form-group col-md-3 col-lg-2">
+                @Html.LabelFor(model => model.Fecha)
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-calendar-date"></i></span>
+                    @Html.TextBoxFor(model => model.Fecha, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                </div>
+                @Html.ValidationMessageFor(model => model.Fecha)
+            </div>
 
-        <div class="form-group col-md-3 col-lg-1">
-            @Html.LabelFor(model => model.DescuentoValue, "Descuento Total")
-            @Html.TextBoxFor(model => model.DescuentoValue, new { @class = "form-control", type = "number", step = "0.01", @readonly = "readonly" })
-            @Html.ValidationMessageFor(model => model.DescuentoValue)
-        </div>
-        <div class="form-group col-md-3 col-lg-1">
-            @Html.LabelFor(model => model.Base)
-            @Html.TextBoxFor(model => model.Base, new { @class = "form-control", type = "number", step = "0.01", @readonly = "readonly" })
-            @Html.ValidationMessageFor(model => model.Base)
-        </div>
+            <div class="form-group col-md-3 col-lg-2">
+                @Html.LabelFor(model => model.FechaPago)
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-calendar-check"></i></span>
+                    @Html.TextBoxFor(model => model.FechaPago, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                </div>
+                @Html.ValidationMessageFor(model => model.FechaPago)
+            </div>
 
-        <div class="form-group col-md-3 col-lg-1">
-            @Html.LabelFor(model => model.Total)
-            @Html.TextBoxFor(model => model.Total, new { @class = "form-control", type = "number", step = "0.01", @readonly = "readonly" })
-            @Html.ValidationMessageFor(model => model.Total)
+            <div class="form-group col-md-3 col-lg-2">
+                @Html.LabelFor(model => model.Estado)
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-check-circle"></i></span>
+                    @Html.TextBoxFor(model => model.Estado, new { @class = "form-control" })
+                </div>
+                @Html.ValidationMessageFor(model => model.Estado)
+            </div>
+
+            <div class="form-group col-md-3 col-lg-2">
+                @Html.LabelFor(model => model.NumeroFactura)
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-file-earmark-text"></i></span>
+                    @Html.TextBoxFor(model => model.NumeroFactura, new { @class = "form-control" })
+                </div>
+                @Html.ValidationMessageFor(model => model.NumeroFactura)
+            </div>
+
+            <div class="form-group col-md-3 col-lg-2">
+                @Html.LabelFor(model => model.MetodoPago)
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-credit-card"></i></span>
+                    @Html.TextBoxFor(model => model.MetodoPago, new { @class = "form-control" })
+                </div>
+                @Html.ValidationMessageFor(model => model.MetodoPago)
+            </div>
+
+            <div class="form-group col-md-3 col-lg-2">
+                @Html.LabelFor(model => model.Observaciones)
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-chat-text"></i></span>
+                    @Html.TextAreaFor(model => model.Observaciones, new { @class = "form-control" })
+                </div>
+                @Html.ValidationMessageFor(model => model.Observaciones)
+            </div>
+
+            <div class="form-group col-md-3 col-lg-2">
+                @Html.LabelFor(model => model.Iva)
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-percent"></i></span>
+                    @Html.TextBoxFor(model => model.Iva, new { @class = "form-control", type = "number", step = "0.01", @readonly = "readonly" })
+                </div>
+                @Html.ValidationMessageFor(model => model.Iva)
+            </div>
+
+            <div class="form-group col-md-3 col-lg-2">
+                @Html.LabelFor(model => model.Descuento)
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-tag"></i></span>
+                    @Html.TextBoxFor(model => model.Descuento, new { @class = "form-control", type = "number", step = "0.01" })
+                </div>
+                @Html.ValidationMessageFor(model => model.Descuento)
+            </div>
+
+            <div class="form-group col-md-3 col-lg-2">
+                @Html.LabelFor(model => model.DescuentoValue, "Descuento Total")
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-tags"></i></span>
+                    @Html.TextBoxFor(model => model.DescuentoValue, new { @class = "form-control", type = "number", step = "0.01", @readonly = "readonly" })
+                </div>
+                @Html.ValidationMessageFor(model => model.DescuentoValue)
+            </div>
+
+            <div class="form-group col-md-3 col-lg-2">
+                @Html.LabelFor(model => model.Base)
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-dash-circle"></i></span>
+                    @Html.TextBoxFor(model => model.Base, new { @class = "form-control", type = "number", step = "0.01", @readonly = "readonly" })
+                </div>
+                @Html.ValidationMessageFor(model => model.Base)
+            </div>
+
+            <div class="form-group col-md-3 col-lg-2">
+                @Html.LabelFor(model => model.Total)
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-calculator"></i></span>
+                    @Html.TextBoxFor(model => model.Total, new { @class = "form-control", type = "number", step = "0.01", @readonly = "readonly" })
+                </div>
+                @Html.ValidationMessageFor(model => model.Total)
+            </div>
         </div>
     </div>
 
 
-    <h3>Agregar Productos</h3>
-    <input type="hidden" id="productos-json" name="productos-json" />
 
+    <h5 class="text-center fw-bold mb-4" style="color:#343340;">
+        <i class="bi bi-plus-square"></i> Agregar Productos
+    </h5>
+    <input type="hidden" id="productos-json" name="productos-json" />
 
     <div id="productos-container">
         <input type="hidden" name="producto_id" id="producto_id" value="" />
@@ -101,52 +147,66 @@
             <!-- Formulario para agregar productos -->
             <div class="form-group col-lg-2">
                 @Html.Label("Producto", "Producto")
-                @Html.DropDownList("ProductoSelect", Model.ProductoList, "Selecciona un producto", new { @class = "form-control" })
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-box"></i></span>
+                    @Html.DropDownList("ProductoSelect", Model.ProductoList, "Selecciona un producto", new { @class = "form-control" })
+                </div>
             </div>
 
             <div class="form-group col-lg-2">
                 @Html.Label("Cantidad", "Cantidad")
-                @Html.TextBox("Cantidad", "", new { @class = "form-control", type = "number", step = "1" })
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-box-seam"></i></span>
+                    @Html.TextBox("Cantidad", "", new { @class = "form-control", type = "number", step = "1" })
+                </div>
             </div>
 
             <div class="form-group col-lg-2">
                 @Html.Label("Costo", "Costo")
-                @Html.TextBox("Costo", "", new { @class = "form-control", type = "number", step = "0.01" })
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-cash"></i></span>
+                    @Html.TextBox("Costo", "", new { @class = "form-control", type = "number", step = "0.01" })
+                </div>
             </div>
-
-
 
             <div class="form-group col-lg-2">
                 <label></label>
-                <button type="button" id="add-product-button" class="form-control btn btn-primary">Agregar Producto</button>
+                <button type="button" id="add-product-button" class="btn btn-primary form-control">
+                    <i class="bi bi-plus"></i> Agregar Producto
+                </button>
             </div>
         </div>
+    </div>
+    <br />
 
+
+    <h5 class="text-center fw-bold mb-4" style="color:#343340;">
+        <i class="bi bi-box"></i> Productos Agregados
+    </h5>
+    <div id="divLista" class="table-container">
+        <table class="table table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th><i class="bi bi-card-list"></i> Id</th>
+                    <th><i class="bi bi-box-seam"></i> Producto</th>
+                    <th><i class="bi bi-plus-circle-dotted"></i> Cantidad</th>
+                    <th><i class="bi bi-currency-dollar"></i> Costo</th>
+                    <th><i class="bi bi-cash"></i> Total</th>
+                    <th><i class="bi bi-gear"></i> Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="productos-list">
+                <!-- Los productos agregados se mostrarán aquí -->
+            </tbody>
+        </table>
+    </div>
+    <br />
+    <div class="d-flex justify-content-center mb-4">
+        <button type="submit" class="fw-bold btn btn-success">
+            <i class="bi bi-save"></i> Guardar Factura
+        </button>
     </div>
 
-
-    <h3>Productos Agregados</h3>
-
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Producto</th>
-                <th>Cantidad</th>
-                <th>Costo</th>
-                <th>Total</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody id="productos-list">
-            <!-- Los productos agregados se mostrarán aquí -->
-        </tbody>
-    </table>
-
-    <div class="form-group">
-
-        <input type="submit" value="Guardar Factura" class="btn btn-success" />
-    </div>
 </form>
 
 @section Scripts {
@@ -213,7 +273,10 @@ $(document).ready(function () {
                     <td>${item.Cantidad}</td>
                     <td>${item.Costo}</td>
                     <td>${item.Total}</td>
-                    <td><button type="button" class="btn btn-danger btn-sm" onclick="removeProduct(${index})">Eliminar</button></td>
+                   <td>    <button type="button" class="btn btn-danger btn-sm" onclick="removeProduct(${index})">  <i class="bi bi-trash"></i> eliminar
+    </button>
+</td>
+
                 </tr>
             `);
         });
