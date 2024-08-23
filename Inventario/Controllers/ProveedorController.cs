@@ -20,31 +20,37 @@ namespace Inventario.Controllers
         public ActionResult List()
         {
             List<ListProveedorViewModel> lst = new List<ListProveedorViewModel>();
-            using (CrudMVCRazorEntities db =
-                new CrudMVCRazorEntities())
+            using (CrudMVCRazorEntities db = new CrudMVCRazorEntities())
             {
-                lst =
-                   (from d in db.proveedor
-
-                    select new ListProveedorViewModel
-                    {
-                        Id = d.id,
-                        Nit = d.nit,
-                        Nombre = d.nombre,
-                        Celular = d.celular,
-                        Direccion = d.direccion,
-                        Email = d.email,
-                        Telefono_fijo = d.telefono_fijo,
-                        Sitio_web = d.sitio_web,
-                        Ciudad = d.ciudad,
-                        Pais = d.pais,
-                        Fecha_registro = d.fecha_registro
-
-                    }).ToList();
-
+                lst = (from d in db.proveedor
+                       select new ListProveedorViewModel
+                       {
+                           Id = d.id,
+                           Nit = d.nit,
+                           Nombre = d.nombre,
+                           Celular = d.celular,
+                           Direccion = d.direccion,
+                           Email = d.email,
+                           Telefono_fijo = d.telefono_fijo,
+                           Sitio_web = d.sitio_web,
+                           Ciudad = d.ciudad,
+                           Pais = d.pais,
+                           Fecha_registro = d.fecha_registro
+                       }).ToList();
             }
+
+            // Verificar si la lista está vacía
+            if (!lst.Any())
+            {
+                // Si la lista está vacía, puedes redirigir a otra acción, mostrar un mensaje, etc.
+       
+                ViewBag.Message = "No hay proveedores disponibles.";
+                return View("New"); 
+            }
+
             return View(lst);
         }
+
 
         public ActionResult New()
         {

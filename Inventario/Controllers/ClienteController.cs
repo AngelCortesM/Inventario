@@ -16,32 +16,40 @@ namespace Inventario.Controllers
             return View();
         }
 
-    
+
         public ActionResult List()
         {
-            List<ListClienteViewModel> lst = new List<ListClienteViewModel>();
-            using (CrudMVCRazorEntities db =
-                new CrudMVCRazorEntities())
+            List<ListClienteViewModel> lst;
+
+            using (CrudMVCRazorEntities db = new CrudMVCRazorEntities())
             {
-                lst =
-                   (from d in db.cliente
-
-                    select new ListClienteViewModel
-                    {
-                        Id = d.id,
-                        Cedula = d.cedula,
-                        Direccion = d.direccion,
-                        Nombre = d.nombre,
-                        Telefono = d.telefono,
-                        Apellido = d.apellido,
-                        Email = d.email,
-                        Fecha = d.fecha,
-                        FechaUp = d.fechaup
-                    }).ToList();
-
+                lst = (from d in db.cliente
+                       select new ListClienteViewModel
+                       {
+                           Id = d.id,
+                           Cedula = d.cedula,
+                           Direccion = d.direccion,
+                           Nombre = d.nombre,
+                           Telefono = d.telefono,
+                           Apellido = d.apellido,
+                           Email = d.email,
+                           Fecha = d.fecha,
+                           FechaUp = d.fechaup
+                       }).ToList();
             }
+
+            // Verificar si la lista está vacía
+            if (!lst.Any())
+            {
+                // Si la lista está vacía, puedes redirigir a otra acción, mostrar un mensaje, etc.
+ 
+                ViewBag.Message = "No hay clientes disponibles.";
+                return View("New");
+            }
+
             return View(lst);
         }
+
 
         public ActionResult New()
         {

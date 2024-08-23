@@ -11,8 +11,7 @@ namespace Inventario.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.Web.Mvc;
-
+    
     public partial class cliente
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -33,10 +32,5 @@ namespace Inventario.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<factura> factura { get; set; }
-
-        internal static object Select(Func<object, SelectListItem> value)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

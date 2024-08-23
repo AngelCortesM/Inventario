@@ -48,6 +48,14 @@ namespace Inventario.Controllers
                            Total = f.total
                        }).ToList();
             }
+            // Verificar si la lista está vacía
+            if (!lst.Any())
+            {
+                // Si la lista está vacía, puedes redirigir a otra acción, mostrar un mensaje, etc.
+
+                ViewBag.Message = "No hay facturas disponibles.";
+                return RedirectToAction("Add", "Factura");
+            }
             return View(lst);
         }
 

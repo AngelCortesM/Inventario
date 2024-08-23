@@ -43,6 +43,14 @@ namespace Inventario.Controllers
                     }).ToList();
 
             }
+            // Verificar si la lista está vacía
+            if (!lst.Any())
+            {
+                // Si la lista está vacía, puedes redirigir a otra acción, mostrar un mensaje, etc.
+
+                ViewBag.Message = "No hay productos disponibles.";
+                return View("New");
+            }
             return View(lst);
         }
 
