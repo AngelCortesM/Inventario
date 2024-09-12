@@ -44,7 +44,6 @@
     <!-- El contenido de la lista de proveedores se cargará aquí -->
 </div>
 
-
 <script>
     // Define URLs para operaciones relacionadas con proveedores
     const urlNew = "@Url.Content("~/Proveedor/New")"; // URL para el formulario de nuevo proveedor
@@ -226,7 +225,6 @@
         });
     }
 
-
     /**
      * Función para ordenar las columnas de la tabla.
 
@@ -300,8 +298,7 @@
         fetch(urlCreate, {
             method: "POST",
             body: JSON.stringify({
-          
-        
+
                 Nit: document.getElementById("Nit").value,
                 Nombre: document.getElementById("Nombre").value,
                 Celular: document.getElementById("Celular").value,
@@ -349,7 +346,7 @@
         fetch(urlUpdate, {
             method: "POST",
             body: JSON.stringify({
-             
+
                 Nit: document.getElementById("Nit").value,
                 Nombre: document.getElementById("Nombre").value,
                 Celular: document.getElementById("Celular").value,
@@ -453,7 +450,7 @@
         });
     }
 
-    //funcion apra exportar a excel 
+    //funcion apra exportar a excel
     document.getElementById('exportToExcel').addEventListener('click', function () {
         const table = document.querySelector('#divLista .table');
         const wb = XLSX.utils.book_new();
@@ -521,7 +518,4 @@
             pdf.save('tabla.pdf');
         });
     });
-
-
 </script>
-

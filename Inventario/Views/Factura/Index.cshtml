@@ -45,18 +45,16 @@
     <!-- El contenido de la lista de productos se cargará aquí -->
 </div>
 
-
 <script>
-        // Define URLs para operaciones relacionadas 
-    const urlNew = "@Url.Content("~/Factura/New")"; // URL para el formulario de nuevo 
-    const urlGet = "@Url.Content("~/Factura/List")"; // URL para obtener la lista 
+        // Define URLs para operaciones relacionadas
+    const urlNew = "@Url.Content("~/Factura/New")"; // URL para el formulario de nuevo
+    const urlGet = "@Url.Content("~/Factura/List")"; // URL para obtener la lista
     const urlEdit = "@Url.Content("~/Factura/Edit")"; // URL para el formulario de edición
     const urlGetProveedor = "@Url.Action("GetCliente", "Factura")"; // URL para obtener la lista de clientes
     const urlCreate = "@Url.Content("~/Factura/Save")"; // URL para guardar una nueva Factura
 
     // Variable para rastrear la visibilidad del formulario 'Nuevo'
     let isNewContentVisible = false;
-
 
     /**
      * Función para cargar la lista de productos.
@@ -73,7 +71,6 @@
 
     // Inicializa la tabla con datos y eventos
     Get();
-
 
     /**
  * Función para realizar una búsqueda en toda la tabla.
@@ -103,7 +100,6 @@
             row.style.display = match ? '' : 'none';
         });
     }
-
 
     /**
      * Función para ordenar las columnas de la tabla.

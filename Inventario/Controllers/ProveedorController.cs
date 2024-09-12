@@ -3,7 +3,6 @@ using Inventario.Models.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Inventario.Controllers
@@ -15,7 +14,6 @@ namespace Inventario.Controllers
         {
             return View();
         }
-
 
         public ActionResult List()
         {
@@ -43,19 +41,19 @@ namespace Inventario.Controllers
             if (!lst.Any())
             {
                 // Si la lista está vacía, puedes redirigir a otra acción, mostrar un mensaje, etc.
-       
+
                 ViewBag.Message = "No hay proveedores disponibles.";
-                return View("New"); 
+                return View("New");
             }
 
             return View(lst);
         }
 
-
         public ActionResult New()
         {
             return View();
         }
+
         [HttpPost]
         public ActionResult Save(ProveedorViewModel model)
         {
@@ -70,15 +68,13 @@ namespace Inventario.Controllers
                     oProveedor.nombre = model.Nombre;
                     oProveedor.celular = model.Celular;
                     oProveedor.direccion = model.Direccion;
-                    
-                 
+
                     oProveedor.email = model.Email;
                     oProveedor.telefono_fijo = model.Telefono_fijo;
                     oProveedor.sitio_web = model.Sitio_web;
                     oProveedor.ciudad = model.Ciudad;
                     oProveedor.pais = model.Pais;
                     oProveedor.fecha_registro = model.Fecha_registro;
-
 
                     // Añadir el proveedor a la base de datos
                     db.proveedor.Add(oProveedor);
@@ -91,7 +87,6 @@ namespace Inventario.Controllers
             {
                 return Content(ex.Message);
             }
-
         }
 
         public ActionResult Edit(int Id)
@@ -104,8 +99,7 @@ namespace Inventario.Controllers
                 model.Nombre = oProveedor.nombre;
                 model.Celular = oProveedor.celular;
                 model.Direccion = oProveedor.direccion;
-                
-            
+
                 model.Email = oProveedor.email;
                 model.Telefono_fijo = oProveedor.telefono_fijo;
                 model.Sitio_web = oProveedor.sitio_web;
@@ -113,9 +107,6 @@ namespace Inventario.Controllers
                 model.Pais = oProveedor.pais;
                 model.Fecha_registro = oProveedor.fecha_registro;
                 model.Id = oProveedor.id;
-
-
-
             }
             return View(model);
         }
@@ -163,7 +154,6 @@ namespace Inventario.Controllers
                 {
                     var oProveedor = db.proveedor.Find(Id);
                     // Asignación de propiedades del modelo al objeto proveedor
-
 
                     db.proveedor.Remove(oProveedor);
                     db.SaveChanges();

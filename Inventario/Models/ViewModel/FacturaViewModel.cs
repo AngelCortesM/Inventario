@@ -1,10 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.WebPages.Html;
-
-using System.Web.Mvc;
 
 namespace Inventario.Models.ViewModel
 {
@@ -28,9 +23,5 @@ namespace Inventario.Models.ViewModel
         public IEnumerable<System.Web.Mvc.SelectListItem> ProductoList { get; set; }
         public IEnumerable<System.Web.Mvc.SelectListItem> ClienteList { get; set; }
         public List<ProductoViewModel> Productos { get; set; } // Agregado para el listado de productos
-            
-
     }
-
-
 }

@@ -3,7 +3,6 @@ using Inventario.Models.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Inventario.Controllers
@@ -19,29 +18,28 @@ namespace Inventario.Controllers
         public ActionResult List()
         {
             List<ListProductoViewModel> lst = new List<ListProductoViewModel>();
-            using (CrudMVCRazorEntities db = 
+            using (CrudMVCRazorEntities db =
                 new CrudMVCRazorEntities())
             {
-               lst = 
-                   ( from d in db.producto
+                lst =
+                    (from d in db.producto
                      join p in db.proveedor on d.proveedor_id equals p.id into proveedores
                      from proveedor in proveedores.DefaultIfEmpty() // Para manejar casos donde no hay proveedor
-                    select new ListProductoViewModel
-                    {
-                        Id = d.id,
-                        Cantidad = d.cantidad,
-                        Valor = d.valor,
-                        Descripcion = d.descripcion,
-                        Estado = d.estado,
-                        Fecha = d.fecha,
-                        Nombre = d.nombre,
-                        Barras = d.barras,
-                        Categoria = d.categoria,
-                        Costo = d.costo,
-                        Proveedor_id = d.proveedor_id,
+                     select new ListProductoViewModel
+                     {
+                         Id = d.id,
+                         Cantidad = d.cantidad,
+                         Valor = d.valor,
+                         Descripcion = d.descripcion,
+                         Estado = d.estado,
+                         Fecha = d.fecha,
+                         Nombre = d.nombre,
+                         Barras = d.barras,
+                         Categoria = d.categoria,
+                         Costo = d.costo,
+                         Proveedor_id = d.proveedor_id,
                          ProveedorNombre = proveedor != null ? proveedor.nombre : "No disponible"
-                    }).ToList();
-
+                     }).ToList();
             }
             // Verificar si la lista está vacía
             if (!lst.Any())
@@ -54,9 +52,10 @@ namespace Inventario.Controllers
             return View(lst);
         }
 
-        public ActionResult New() {
+        public ActionResult New()
+        {
             return View();
-                }
+        }
 
         // Acción para obtener la lista de proveedores
         public ActionResult GetProveedor()
@@ -74,13 +73,12 @@ namespace Inventario.Controllers
             }
         }
 
-
         [HttpPost]
         public ActionResult Save(ProductoViewModel model)
         {
             try
             {
-                using (CrudMVCRazorEntities db= new CrudMVCRazorEntities())
+                using (CrudMVCRazorEntities db = new CrudMVCRazorEntities())
                 {
                     var oProducto = new producto();
                     oProducto.cantidad = model.Cantidad;
@@ -100,11 +98,12 @@ namespace Inventario.Controllers
                 }
                 return Content("1");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return Content(ex.Message);
             }
         }
+
         //editar
         public ActionResult Edit(int Id)
         {
@@ -126,12 +125,9 @@ namespace Inventario.Controllers
                     model.Costo = oProducto.costo;
                     model.Id = oProducto.id;
                 }
-
-
             }
             return View(model);
         }
-
 
         [HttpPost]
         public ActionResult Update(ProductoViewModel model)
@@ -165,7 +161,7 @@ namespace Inventario.Controllers
                         db.SaveChanges();
                     }
                 }
-                    return Content("1");
+                return Content("1");
             }
             catch (Exception ex)
             {
@@ -182,7 +178,6 @@ namespace Inventario.Controllers
                 {
                     var oProducto = db.producto.Find(Id);
                     // Asignación de propiedades del modelo al objeto proveedor
-
 
                     db.producto.Remove(oProducto);
                     db.SaveChanges();

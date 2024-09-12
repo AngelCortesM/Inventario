@@ -15,10 +15,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.css" rel="stylesheet">
-
-
-
-
 </head>
 <body>
     <style>
@@ -35,21 +31,19 @@
             </button>
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
-   
+
                     <li class="nav-item">@Html.ActionLink("Clientes", "Index", "Cliente", new { area = "" }, new { @class = "nav-link text-light" })</li>
                     <li class="nav-item">@Html.ActionLink("Proveedores", "Index", "Proveedor", new { area = "" }, new { @class = "nav-link text-light" })</li>
                     <li class="nav-item">@Html.ActionLink("Productos", "Index", "Producto", new { area = "" }, new { @class = "nav-link text-light" })</li>
                     <li class="nav-item">@Html.ActionLink("Facturas", "Index", "Factura", new { area = "" }, new { @class = "nav-link text-light" })</li>
-
                 </ul>
             </div>
         </div>
     </nav>
 
-        <div class=" body-content">
-            @RenderBody()
-        </div>
-
+    <div class=" body-content">
+        @RenderBody()
+    </div>
 
     <footer>
         <p>&copy; @DateTime.Now.Year - Angel Cortés ASP.NET</p>
@@ -60,6 +54,5 @@
     @Scripts.Render("~/bundles/jquery")
 
     @RenderSection("scripts", required: false)
-
 </body>
 </html>

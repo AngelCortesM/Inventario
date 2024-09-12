@@ -1,22 +1,18 @@
 ﻿using Inventario.Models;
 using Inventario.Models.ViewModel;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Timers;
-using System.Web;
 using System.Web.Mvc;
-
-
 
 namespace Inventario.Controllers
 {
     public class FacturaController : Controller
     {
         private readonly CrudMVCRazorEntities db = new CrudMVCRazorEntities();
+
         // GET: Factura
         public ActionResult Index()
         {
@@ -117,6 +113,7 @@ namespace Inventario.Controllers
 
             return View(model);
         }
+
         public ActionResult Add()
         {
             using (var db = new CrudMVCRazorEntities())
@@ -137,7 +134,8 @@ namespace Inventario.Controllers
                 }).ToList();
 
                 // Pasar el costo al ViewBag
-                ViewBag.ProductoCostos = productos.Select(p => new {
+                ViewBag.ProductoCostos = productos.Select(p => new
+                {
                     Id = p.id,
                     Costo = p.costo
                 }).ToList();
@@ -254,8 +252,5 @@ namespace Inventario.Controllers
                 return Json(new { success = false, errors = new[] { "Se produjo un error al guardar la factura: " + ex.Message } });
             }
         }
-
-
-
     }
 }

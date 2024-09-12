@@ -44,9 +44,6 @@
     <!-- El contenido de la lista de productos se cargará aquí -->
 </div>
 
-
-
-
 <script>
     // Define URLs para operaciones relacionadas con productos
     const urlNew = "@Url.Content("~/Producto/New")"; // URL para el formulario de nuevo producto
@@ -193,7 +190,6 @@
         }
     }
 
-
     /**
      * Función para cargar la lista de productos.
      */
@@ -238,7 +234,6 @@
             row.style.display = match ? '' : 'none';
         });
     }
-
 
     /**
      * Función para ordenar las columnas de la tabla.
@@ -445,7 +440,6 @@
         });
     }
 
-
      /**
   * Función para editar un producto existente.
   */
@@ -559,7 +553,6 @@ function jsDelete(Id) {
         }
     });
 }
-
 
     //funcion apra exportar a excel
     document.getElementById('exportToExcel').addEventListener('click', function () {

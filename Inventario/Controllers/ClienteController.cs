@@ -3,7 +3,6 @@ using Inventario.Models.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Inventario.Controllers
@@ -15,7 +14,6 @@ namespace Inventario.Controllers
         {
             return View();
         }
-
 
         public ActionResult List()
         {
@@ -42,7 +40,7 @@ namespace Inventario.Controllers
             if (!lst.Any())
             {
                 // Si la lista está vacía, puedes redirigir a otra acción, mostrar un mensaje, etc.
- 
+
                 ViewBag.Message = "No hay clientes disponibles.";
                 return View("New");
             }
@@ -50,11 +48,11 @@ namespace Inventario.Controllers
             return View(lst);
         }
 
-
         public ActionResult New()
         {
             return View();
         }
+
         [HttpPost]
         public ActionResult Save(ClienteViewModel model)
         {
@@ -64,7 +62,7 @@ namespace Inventario.Controllers
                 {
                     var oCliente = new cliente();
                     // Asignación de propiedades del modelo al objeto cliente
-              
+
                     oCliente.cedula = model.Cedula;
                     oCliente.direccion = model.Direccion;
                     oCliente.nombre = model.Nombre;
@@ -85,7 +83,6 @@ namespace Inventario.Controllers
             {
                 return Content(ex.Message);
             }
-
         }
 
         public ActionResult Edit(int Id)
@@ -100,11 +97,9 @@ namespace Inventario.Controllers
                 model.Telefono = oCliente.telefono;
                 model.Apellido = oCliente.apellido;
                 model.Email = oCliente.email;
-             
+
                 model.FechaUp = oCliente.fechaup;
                 model.Id = oCliente.id;
-
-
             }
             return View(model);
         }
@@ -125,7 +120,7 @@ namespace Inventario.Controllers
                     oCliente.telefono = model.Telefono;
                     oCliente.apellido = model.Apellido;
                     oCliente.email = model.Email;
-              
+
                     oCliente.fechaup = model.FechaUp;
 
                     // Añadir el cliente a la base de datos
@@ -150,7 +145,6 @@ namespace Inventario.Controllers
                 {
                     var oCliente = db.cliente.Find(Id);
                     // Asignación de propiedades del modelo al objeto cliente
-
 
                     db.cliente.Remove(oCliente);
                     db.SaveChanges();

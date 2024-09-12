@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Inventario.Models.ViewModel
 {
@@ -18,6 +15,5 @@ namespace Inventario.Models.ViewModel
         public string Ciudad { get; set; }
         public string Pais { get; set; }
         public DateTime? Fecha_registro { get; set; }
-
     }
 }
