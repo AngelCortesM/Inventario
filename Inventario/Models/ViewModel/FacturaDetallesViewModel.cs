@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Inventario.Models.ViewModel
 {
@@ -9,6 +7,7 @@ namespace Inventario.Models.ViewModel
     {
         // Datos del encabezado de la factura
         public int FacturaId { get; set; }
+
         public int? ClienteId { get; set; }
         public string NombreCliente { get; set; }
         public DateTime? Fecha { get; set; }

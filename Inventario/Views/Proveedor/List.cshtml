@@ -4,7 +4,6 @@
     Layout = null;
 }
 
-
 <link rel="stylesheet" type="text/css" href="~/Content/css/List.css">
 
 <div id="divLista" class="table-container">
@@ -88,36 +87,36 @@
         <tbody>
             @foreach (var oProveedor in Model)
             {
-                <tr>
-                    <td>@oProveedor.Id</td>
-                    <td>@oProveedor.Nit</td>
-                    <td>@oProveedor.Nombre</td>
-                    <td>@oProveedor.Celular</td>
-                    <td>@oProveedor.Direccion</td>
-                    <td>@oProveedor.Email</td>
-                    <td>@oProveedor.Telefono_fijo</td>
-                    <td>@oProveedor.Sitio_web</td>
-                    <td>@oProveedor.Ciudad</td>
-                    <td>@oProveedor.Pais</td>
-                    <td>@(oProveedor.Fecha_registro.HasValue ? oProveedor.Fecha_registro.Value.ToString("d") : "N/A")</td>
+            <tr>
+                <td>@oProveedor.Id</td>
+                <td>@oProveedor.Nit</td>
+                <td>@oProveedor.Nombre</td>
+                <td>@oProveedor.Celular</td>
+                <td>@oProveedor.Direccion</td>
+                <td>@oProveedor.Email</td>
+                <td>@oProveedor.Telefono_fijo</td>
+                <td>@oProveedor.Sitio_web</td>
+                <td>@oProveedor.Ciudad</td>
+                <td>@oProveedor.Pais</td>
+                <td>@(oProveedor.Fecha_registro.HasValue ? oProveedor.Fecha_registro.Value.ToString("d") : "N/A")</td>
 
-                    <td>
-                        <div class="d-flex">
-                            <a onclick="Edit(@oProveedor.Id)">
-                                <div class="btn2">
+                <td>
+                    <div class="d-flex">
+                        <a onclick="Edit(@oProveedor.Id)">
+                            <div class="btn2">
 
-                                    <i class="text-dark bi bi-gear-wide-connected"></i>
-                                </div>
-                            </a>
-                            <a onclick="jsDelete(@oProveedor.Id)">
-                                <div class="btn1">
+                                <i class="text-dark bi bi-gear-wide-connected"></i>
+                            </div>
+                        </a>
+                        <a onclick="jsDelete(@oProveedor.Id)">
+                            <div class="btn1">
 
-                                    <i class="text-dark bi bi-backspace-fill"></i>
-                                </div>
-                            </a>
-                        </div>
-                    </td>
-                </tr>
+                                <i class="text-dark bi bi-backspace-fill"></i>
+                            </div>
+                        </a>
+                    </div>
+                </td>
+            </tr>
             }
         </tbody>
     </table>

@@ -2,10 +2,9 @@
     ViewBag.Title = "Lista de Clientes"; // Define el título de la vista
 }
 
-
 <!-- Campo de búsqueda -->
 <div class="container mt-4">
-   
+
     <div class="mb-3">
         <h4 class="text-center fw-bold mb-4" style="color:#343340;">@ViewBag.Title</h4> <!-- Muestra el título en el encabezado de la página -->
         <!-- Grupo de entrada con botones y campo de búsqueda -->
@@ -26,7 +25,6 @@
             <button id="exportButton" class="btn btn-danger">
                 <i class="bi bi-file-pdf"></i> Exportar a PDF
             </button>
-
         </div>
     </div>
 </div>
@@ -45,7 +43,6 @@
 <div id="divLista" class="container-fluid">
     <!-- El contenido de la lista de clientes se cargará aquí -->
 </div>
-
 
 <script>
     // Define URLs para operaciones relacionadas con clientes
@@ -220,10 +217,10 @@
 
 /**
  * Función para ordenar las columnas de la tabla.
- * 
+ *
  * Ordena las filas de la tabla en función del contenido de la columna seleccionada.
  * Detecta automáticamente si la columna contiene valores numéricos o textuales y ordena en consecuencia.
- * 
+ *
  */
 function sortTable(columnIndex) {
     // Selecciona la tabla y su cuerpo (tbody).
@@ -267,7 +264,7 @@ function sortTable(columnIndex) {
 
 /**
  * Añade eventos de ordenación a los encabezados de columna.
- * 
+ *
  * Asocia un evento de clic a cada encabezado de columna para ordenar la tabla cuando se haga clic.
  */
 function attachSortEvents() {
@@ -280,7 +277,6 @@ function attachSortEvents() {
 
 // Llama a attachSortEvents para inicializar la funcionalidad de ordenación al cargar la página.
 document.addEventListener('DOMContentLoaded', attachSortEvents);
-
 
     /**
      * Función para filtrar filas por columna específica.
@@ -459,7 +455,6 @@ document.addEventListener('DOMContentLoaded', attachSortEvents);
         });
     }
 
-
     //funcion apra exportar a excel
     document.getElementById('exportToExcel').addEventListener('click', function () {
         const table = document.querySelector('#divLista .table');
@@ -486,7 +481,6 @@ document.addEventListener('DOMContentLoaded', attachSortEvents);
         // Exportar el archivo
         XLSX.writeFile(wb, 'tabla_clientes.xlsx');
     });
-
 
     // Función para exportar a PDF
     document.getElementById('exportButton').addEventListener('click', function () {
@@ -529,6 +523,4 @@ document.addEventListener('DOMContentLoaded', attachSortEvents);
             pdf.save('tabla.pdf');
         });
     });
-
 </script>
-

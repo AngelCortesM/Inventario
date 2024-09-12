@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Inventario.Models.ViewModel
 {
@@ -17,5 +14,4 @@ namespace Inventario.Models.ViewModel
         public DateTime? Fecha { get; set; }
         public DateTime? FechaUp { get; set; }
     }
-
 }

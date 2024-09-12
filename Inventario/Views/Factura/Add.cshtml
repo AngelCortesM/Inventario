@@ -1,6 +1,5 @@
 ﻿@model Inventario.Models.ViewModel.FacturaViewModel
 
-
 @{
     ViewBag.Title = "Formulario para la creacion de Facturas";
 }
@@ -15,8 +14,6 @@
 </style>
 
 @Html.AntiForgeryToken()
-
-
 
 <form id="form-factura" class="form form-control">
     <h5 class="text-center fw-bold mb-4" style="color:#343340;">
@@ -134,8 +131,6 @@
         </div>
     </div>
 
-
-
     <h5 class="text-center fw-bold mb-4" style="color:#343340;">
         <i class="bi bi-plus-square"></i> Agregar Productos
     </h5>
@@ -179,7 +174,6 @@
     </div>
     <br />
 
-
     <h5 class="text-center fw-bold mb-4" style="color:#343340;">
         <i class="bi bi-box"></i> Productos Agregados
     </h5>
@@ -206,7 +200,6 @@
             <i class="bi bi-save"></i> Guardar Factura
         </button>
     </div>
-
 </form>
 
 @section Scripts {
@@ -276,7 +269,6 @@ $(document).ready(function () {
                    <td>    <button type="button" class="btn btn-danger btn-sm" onclick="removeProduct(${index})">  <i class="bi bi-trash"></i> eliminar
     </button>
 </td>
-
                 </tr>
             `);
         });

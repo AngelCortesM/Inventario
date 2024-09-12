@@ -4,7 +4,6 @@
     Layout = null;
 }
 
-
 <link rel="stylesheet" type="text/css" href="~/Content/css/List.css">
 
 <div id="divLista" class="table-container">
@@ -67,7 +66,7 @@
                 </th>
                 <th>
                     <div class="header-input-container">
-                     <span>Acciones</span>
+                        <span>Acciones</span>
                     </div>
                 </th> <!-- Columna para las acciones, puede estar vacía -->
             </tr>
@@ -75,34 +74,34 @@
         <tbody>
             @foreach (var oCliente in Model)
             {
-                <tr>
-                    <td>@oCliente.Id</td>
-                    <td>@oCliente.Cedula</td>
-                    <td>@oCliente.Direccion</td>
-                    <td>@oCliente.Nombre</td>
-                    <td>@oCliente.Apellido</td>
-                    <td>@oCliente.Telefono</td>
-                    <td>@oCliente.Email</td>
-                    <td>@(oCliente.Fecha.HasValue ? oCliente.Fecha.Value.ToString("d") : "N/A")</td>
-                    <td>@(oCliente.FechaUp.HasValue ? oCliente.FechaUp.Value.ToString("d") : "N/A")</td>
-                    <td>
-                        <div class="d-flex">
+            <tr>
+                <td>@oCliente.Id</td>
+                <td>@oCliente.Cedula</td>
+                <td>@oCliente.Direccion</td>
+                <td>@oCliente.Nombre</td>
+                <td>@oCliente.Apellido</td>
+                <td>@oCliente.Telefono</td>
+                <td>@oCliente.Email</td>
+                <td>@(oCliente.Fecha.HasValue ? oCliente.Fecha.Value.ToString("d") : "N/A")</td>
+                <td>@(oCliente.FechaUp.HasValue ? oCliente.FechaUp.Value.ToString("d") : "N/A")</td>
+                <td>
+                    <div class="d-flex">
 
-                            <a onclick="Edit(@oCliente.Id)">
-                                <div class="btn2" >
+                        <a onclick="Edit(@oCliente.Id)">
+                            <div class="btn2">
 
-                                    <i class="text-dark bi bi-gear-wide-connected"></i>
-                                </div>
-                            </a>
-                            <a onclick="jsDelete(@oCliente.Id)">
-                                <div class="btn1">
+                                <i class="text-dark bi bi-gear-wide-connected"></i>
+                            </div>
+                        </a>
+                        <a onclick="jsDelete(@oCliente.Id)">
+                            <div class="btn1">
 
-                                    <i class="text-dark bi bi-backspace-fill"></i>
-                                </div>
-                                </a>
-                        </div>
-                    </td>
-                </tr>
+                                <i class="text-dark bi bi-backspace-fill"></i>
+                            </div>
+                        </a>
+                    </div>
+                </td>
+            </tr>
             }
         </tbody>
     </table>

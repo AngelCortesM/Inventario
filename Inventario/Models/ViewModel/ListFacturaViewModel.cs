@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Inventario.Models.ViewModel
 {
@@ -9,6 +6,7 @@ namespace Inventario.Models.ViewModel
     {
         // Datos de la tabla factura
         public int FacturaId { get; set; } // Identificador único de la factura
+
         public int? ClienteId { get; set; } // Identificador del cliente
         public DateTime? Fecha { get; set; } // Fecha de la factura
         public DateTime? FechaPago { get; set; } // Fecha de pago

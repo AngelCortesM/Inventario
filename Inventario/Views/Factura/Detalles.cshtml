@@ -2,10 +2,7 @@
 
 <link rel="stylesheet" type="text/css" href="~/Content/css/List.css">
 
-
 <style>
-
-
 
     ul.list-unstyled {
         line-height: 0.8;
@@ -14,9 +11,11 @@
         ul.list-unstyled li {
             margin-bottom: 0.25rem;
         }
+
             ul.list-unstyled li strong {
                 font-weight: 700;
             }
+
     .mt-5 {
         background-color: #fadad15e;
         line-height: 0.1;
@@ -32,7 +31,6 @@
         text-align: center;
     }
 </style>
-
 
 <div class="container mt-5">
     <div class="row">
@@ -80,7 +78,6 @@
         </div>
     </div>
 </div>
-
 
 <div class="container-fluid">
 
@@ -155,27 +152,23 @@
             <tbody>
                 @foreach (var producto in Model.Productos)
                 {
-                    <tr>
-                        <td>@producto.ProductoId</td>
-                        <td>@producto.NombreProducto</td>
-                        <td>@producto.Cantidad</td>
-                        <td>@producto.PrecioUnitario.ToString("C")</td>
-                        <td>@(producto.Base.HasValue ? producto.Base.Value.ToString("C") : "No disponible")</td>
-                        <td>@(producto.Iva.HasValue ? producto.Iva.Value.ToString("C") : "No disponible")</td>
-                        <td>@(producto.ValorIva.HasValue ? producto.ValorIva.Value.ToString("C") : "No disponible")</td>
-                        <td>@(producto.Descuento.HasValue ? producto.Descuento.Value.ToString("C") : "No disponible")</td>
-                        <td>@(producto.ValorDescuento.HasValue ? producto.ValorDescuento.Value.ToString("C") : "No disponible")</td>
-                        <td>@(producto.PrecioTotal.HasValue ? producto.PrecioTotal.Value.ToString("C") : "No disponible")</td>
-                    </tr>
+                <tr>
+                    <td>@producto.ProductoId</td>
+                    <td>@producto.NombreProducto</td>
+                    <td>@producto.Cantidad</td>
+                    <td>@producto.PrecioUnitario.ToString("C")</td>
+                    <td>@(producto.Base.HasValue ? producto.Base.Value.ToString("C") : "No disponible")</td>
+                    <td>@(producto.Iva.HasValue ? producto.Iva.Value.ToString("C") : "No disponible")</td>
+                    <td>@(producto.ValorIva.HasValue ? producto.ValorIva.Value.ToString("C") : "No disponible")</td>
+                    <td>@(producto.Descuento.HasValue ? producto.Descuento.Value.ToString("C") : "No disponible")</td>
+                    <td>@(producto.ValorDescuento.HasValue ? producto.ValorDescuento.Value.ToString("C") : "No disponible")</td>
+                    <td>@(producto.PrecioTotal.HasValue ? producto.PrecioTotal.Value.ToString("C") : "No disponible")</td>
+                </tr>
                 }
             </tbody>
         </table>
     </div>
 </div>
-
-
-
-
 
 <script>
 
@@ -246,8 +239,4 @@
         attachSortEvents();
         attachFilterEvents();
     });
-
-
-
-
 </script>

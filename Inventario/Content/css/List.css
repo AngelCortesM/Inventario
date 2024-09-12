@@ -16,8 +16,6 @@ nav {
     top: 0;
     width: 100%;
     z-index: 1000;
-    
-   
 }
 
 /* Configura el footer para que esté fijo en la parte inferior */
@@ -35,8 +33,6 @@ footer {
 .body-content {
     flex: 1;
     overflow-y: auto;
-   
-   
     margin-bottom: 25px; /* Igual a la altura del footer */
     /* Oculta la barra de desplazamiento en la mayoría de los navegadores */
     scrollbar-width: none; /* Firefox */
@@ -47,7 +43,6 @@ footer {
     .body-content::-webkit-scrollbar {
         display: none;
     }
-
 
 /* Contenedor de la tabla */
 .table-container {
@@ -98,7 +93,6 @@ footer {
         overflow: hidden;
         text-overflow: ellipsis;
     }
-
 
 /* Estilos para las celdas de la tabla */
 .table td, .table th {
@@ -171,15 +165,13 @@ footer {
     transition: background 0.3s; /* Transición suave del fondo */
 }
 
-
-
     .btn2:hover {
         background: #0081CB; /* Azul más oscuro al pasar el cursor */
     }
 
 /* Estilo para el botón de document */
 .btn3 {
-   background: #FFB347; /* naranja pastel para editar */
+    background: #FFB347; /* naranja pastel para editar */
     color: white; /* Color del texto */
     border: none; /* Sin borde */
     transition: background 0.3s; /* Transición suave del fondo */
@@ -221,7 +213,6 @@ footer {
 .column-id {
     word-wrap: break-word;
 }
-
 
 @media screen and (max-width: 768px) {
     .table-container {
